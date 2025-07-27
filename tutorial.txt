@@ -1,25 +1,7 @@
-^ This is a comment line
+input = (A, B);
+root = (x, y);
+transit_to = (x,y)(x, m1)(m1, m2)(m2, y)(m1, u)(m2, v)(u)(v);
 
-^ The only data type in the dsl is an array of arrays.
-foo = (x,y)(a,b,c);
-bar = (A)(B,C);
-baz_quux = (p,q,r)(s)(t,u)(v,w,x,y,z);
+@rule = root -> root -> transit_to;
 
-^ Declare rules with @predicate.
-@grow = (X) -> (Y,Z) -> (W);
-@chain = foo -> bar -> (D,E);
-
-^ Declare states with $predicate and use `<~` to apply rule to state or array
-$st_inline = (P)(Q,R) <~ (U)->(V)->(W);
-
-$st_named = (M,N) <~ @grow 3;
-
-$st_var = foo <~ @chain;
-
-$st_mixed = bar <~ (L)->(M,N)->(O) 5;
-
-^ Declare variables in one line
-foo2 = (1,2)(3); @R = (A)->(B)->(C); $s = (1)(2) <~ @R 2;
-
-^ Or combine them all together
-$final_test = baz_quux <~ @grow 1;
+$test = input <~ @rule 5;

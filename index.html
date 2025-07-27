@@ -47,14 +47,14 @@
         }
 
         #editor-container {
-            width: 65%;
+            width: 75%;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
         #editor {
-            height: 800px;
+            height: 900px;
             width: 100%;
             background: white;
             border: 1px solid #444;
@@ -63,41 +63,35 @@
             box-sizing: border-box;
         }
 
-        #run-button {
-            align-self: flex-start;
+        #buttons {
+            display: flex;
+            gap: 4px;
             width: 100%;
+        }
+
+        #buttons button {
+            flex: 1;
             height: 2.5rem;
             background: black;
             color: white;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
             border-radius: 2px;
             margin-bottom: 2px;
+            min-width: 0;
         }
 
         #side-panel {
-            width: 35%;
+            width: 25%;
             display: flex;
             flex-direction: column;
             gap: 4px;
         }
 
-        /* #detected-states {
-            flex-grow: 1;
-            width: 100%;
-            height: 100%;
-            background: #eee;
-            border: 1px solid #888;
-            padding: 4px;
-            box-sizing: border-box;
-            border-radius: 2px;
-            overflow-y: auto;
-        } */
-
         #detected-states {
-            min-height: 754px;  
-            max-height: 754px;      
+            min-height: 854px;  
+            max-height: 854px;      
             overflow-y: auto;       
             padding: 4px;
             margin: 0;
@@ -131,6 +125,11 @@
         footer p {
             text-align: center;
         }
+        footer {
+            margin: 0;
+            padding: 0;
+            height: 12px;
+        }
 
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -149,7 +148,11 @@
                 <script type="module" src="/src/bundle/editor.js"></script>
             </div>
             <div id="side-panel">
-                <button id="run-button">detect states and run</button>
+                <div id="buttons">
+                    <button id="run-button">detect</button>
+                    <button id="send-button">send</button>
+                    <button id="clean-button">clean</button>
+                </div>
                 <div id="detected-states"></div>
             </div>
         </div>

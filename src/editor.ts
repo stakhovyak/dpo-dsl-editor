@@ -1,6 +1,8 @@
 import * as ace from 'ace-builds'
 import parser from './bundle/parser.js'
 
+const server_url = "http://127.0.0.1:8001/evolve"
+
 const tutorial = `^ This is a comment line
 
 ^ The only data type in the dsl is an array of arrays.
@@ -34,11 +36,8 @@ editor.setOptions({
     value: tutorial,
 });
 
-editor.session.on('change', () => {
-    // console.log(editor.getValue())
-});
-
 const runButton = document.getElementById("run-button");
+const sendButton = document.getElementById("send-button")
 
 type ASTNode = ArrayNode | RuleNode | StateNode;
 
@@ -60,22 +59,25 @@ interface ArrayNode {
 interface RuleNode {
     type: "rule";
     name: string;
-    sequence: SeqItem[];
+    isLIR: boolean;
+    L?: SeqItem;
+    I?: SeqItem;
+    R?: SeqItem;
+    sequence?: SeqItem[];
 }
 
 interface StateNode {
     type: "state";
     name: string;
     source: string | string[][] | StateNode;
-    rule: SeqItem[];
+    rule: RuleNode | SeqItem[] | any;
     count: number | null;
 }
 
 type SeqItem =
-    | { type: "inline", value: string[] }     // ArrayGroup inline
-    | { type: "varRef", name: string }         // Identifier reference
-    | { type: "ruleRef", name: string };        // RuleName reference
-
+    | { type: "inline", value: string[] }
+    | { type: "varRef", name: string }
+    | { type: "ruleRef", name: string };
 
 function validateAST(ast: ASTNode[], states: StateNode[]) {
     const variables = new Set<string>();
@@ -83,16 +85,30 @@ function validateAST(ast: ASTNode[], states: StateNode[]) {
     const stateNames = new Set(states.map(s => s.name));
     const errors: string[] = [];
 
-    // Собираем имена
     for (const node of ast) {
         if (node.type === "array") variables.add(node.name);
         if (node.type === "rule") rules.add(node.name);
     }
 
-    // Проверяем каждую Rule и State на ссылки
     for (const node of ast) {
         if (node.type === "rule" || node.type === "state") {
-            const seq = node.type === "rule" ? node.sequence : node.rule;
+            let seq: SeqItem[] = [];
+
+            if (node.type === "rule") {
+                if (node.isLIR && node.L && node.I && node.R) {
+                    seq = [node.L, node.I, node.R];
+                } else if (node.sequence) {
+                    seq = node.sequence;
+                }
+            } else {
+                if (Array.isArray(node.rule)) {
+                    seq = node.rule;
+                } else if (node.rule.isLIR && node.rule.L && node.rule.I && node.rule.R) {
+                    seq = [node.rule.L, node.rule.I, node.rule.R];
+                } else if (node.rule.sequence) {
+                    seq = node.rule.sequence;
+                }
+            }
 
             for (const item of seq) {
                 if (item.type === "varRef" && !variables.has(item.name)) {
@@ -111,7 +127,9 @@ function validateAST(ast: ASTNode[], states: StateNode[]) {
     }
 
     return errors;
-    }
+}
+
+const stateJsons: StateJson[] = [];
 
 runButton?.addEventListener("click", () => {
     let ast: ASTNode[];
@@ -122,96 +140,92 @@ runButton?.addEventListener("click", () => {
         return;
     }
 
-    // Build lookup tables
     const arrays = new Map<string, string[][]>();
-    const rules = new Map<string, SeqItem[]>();
+    const rules = new Map<string, RuleNode>();
     const states: StateNode[] = [];
 
     for (const node of ast) {
         if (node.type === "array") {
             arrays.set(node.name, node.value);
         } else if (node.type === "rule") {
-            rules.set(node.name, node.sequence);
+            rules.set(node.name, node);
         } else {
             states.push(node);
         }
     }
 
-    // Validate
+    for (const stateNode of states) {
+        if (Array.isArray(stateNode.rule)) {
+            for (let i = 0; i < stateNode.rule.length; i++) {
+                const item = stateNode.rule[i];
+                if (item.type === "ruleRef") {
+                    const rule = rules.get(item.name);
+                    if (rule) {
+                        stateNode.rule[i] = rule;
+                    }
+                }
+            }
+        } else if (stateNode.rule.type === "ruleRef") {
+            const rule = rules.get(stateNode.rule.name);
+            if (rule) {
+                stateNode.rule = rule;
+            }
+        }
+    }
+
     const errors = validateAST(ast, states);
     if (errors.length) {
         console.error("Semantic errors:\n" + errors.join("\n"));
         return;
     }
-    console.info(ast)
 
-    // // Compact unfold + JSON build + render
-    // const panel = document.getElementById("detected-states")!;
-    // panel.innerHTML = "<ul>" + states.map(state => {
-    //     // helper
-    //     const unfold = (item: SeqItem): string[][] =>
-    //         item.type === "inline" ? [item.value] :
-    //             item.type === "varRef" ? (arrays.get(item.name) ?? []) :
-    //                 rules.get(item.name)?.flatMap(unfold) ?? [];
-
-    //     // build hypergraph
-    //     const srcGroups = typeof state.source === "string"
-    //         ? (arrays.get(state.source) ?? [])
-    //         : state.source;
-    //     const hypergraph = srcGroups.map(g => ({ vertices: g }));
-
-    //     // build rule object
-    //     const ruleObj: Record<string, { vertices: string[] }[]> = {};
-    //     if (state.rule.length === 1 && state.rule[0].type === "ruleRef") {
-    //         const nm = state.rule[0].name;
-    //         ruleObj[nm] = (rules.get(nm) ?? []).flatMap(unfold).map(v => ({ vertices: v }));
-    //     } else {
-    //         ruleObj["rule"] = state.rule.flatMap(unfold).map(v => ({ vertices: v }));
-    //     }
-
-    //     const json: any = {
-    //         hypergraph,
-    //         rule: ruleObj,
-    //         steps: state.count,
-    //         clean: true
-    //     };
-
-    //     return `<li><pre>${JSON.stringify(json, null, 2)}</pre></li>`;
-    // }).join("") + "</ul>";
-
-    // Compact unfold + JSON build + render
     const panel = document.getElementById("detected-states")!;
     panel.innerHTML = "<ul>" + states.map(state => {
-        // helper
-        const unfold = (item: SeqItem): string[][] =>
-            item.type === "inline" ? [item.value] :
-                item.type === "varRef" ? (arrays.get(item.name) ?? []) :
-                    rules.get(item.name)?.flatMap(unfold) ?? [];
+        const unfold = (item: SeqItem | RuleNode): string[][] => {
+            if ("type" in item) {
+                if (item.type === "inline") {
+                    return [item.value];
+                } else if (item.type === "varRef") {
+                    return arrays.get(item.name) ?? [];
+                } else if (item.type === "ruleRef") {
+                    const rule = rules.get(item.name);
+                    return rule ? unfold(rule) : [];
+                }
+            }
 
-        // build hypergraph - modified to handle recursive structure
-        const buildHypergraph = (source: string | string[][] | StateNode): any => {
+            const ruleNode = item as RuleNode;
+            if (ruleNode.isLIR && ruleNode.L && ruleNode.I && ruleNode.R) {
+                return [
+                    ...unfold(ruleNode.L),
+                    ...unfold(ruleNode.I),
+                    ...unfold(ruleNode.R)
+                ];
+            } else if (ruleNode.sequence) {
+                return ruleNode.sequence.flatMap(unfold);
+            }
+            return [];
+        };
+
+        const buildHypergraph = (source: string | string[][] | StateNode): Hyperedge[] | StateJson => {
             if (typeof source === "string") {
-                // Check if this is a reference to another state
                 const referencedState = states.find(s => s.name === source);
                 if (referencedState) {
-                    // It's a state reference - recursively build its structure
                     return {
                         hypergraph: buildHypergraph(referencedState.source),
-                        rule: referencedState.rule.flatMap(unfold).map(v => ({ vertices: v })),
+                        rule: {}, // Placeholder
                         steps: referencedState.count,
                         clean: true
                     };
                 } else {
-                    // It's an array reference
-                    return (arrays.get(source) ?? []).map(g => ({ vertices: g }));
+                    const array = arrays.get(source) ?? [];
+                    return array.map(g => ({ vertices: g }));
                 }
             } else if (Array.isArray(source)) {
                 return source.map(g => ({ vertices: g }));
             } else {
-                // For StateNode case, recursively build the hypergraph
                 return {
                     hypergraph: buildHypergraph(source.source),
-                    rule: source.rule.flatMap(unfold).map(v => ({ vertices: v })),
+                    rule: {}, // Placeholder
                     steps: source.count,
                     clean: true
                 };
@@ -220,23 +234,76 @@ runButton?.addEventListener("click", () => {
 
         const hypergraph = buildHypergraph(state.source);
 
-        // build rule object
-        const ruleObj: Record<string, { vertices: string[] }[]> = {};
-        if (state.rule.length === 1 && state.rule[0].type === "ruleRef") {
-            const nm = state.rule[0].name;
-            ruleObj[nm] = (rules.get(nm) ?? []).flatMap(unfold).map(v => ({ vertices: v }));
+        const toHyperedges = (item: SeqItem | RuleNode): Hyperedge[] =>
+            unfold(item).map(vertices => ({ vertices }));
+
+        const ruleObj: Record<string, Hyperedge[]> = {};
+
+        if (Array.isArray(state.rule)) {
+            if (state.rule.length === 3) {
+                ruleObj["L"] = toHyperedges(state.rule[0]);
+                ruleObj["I"] = toHyperedges(state.rule[1]);
+                ruleObj["R"] = toHyperedges(state.rule[2]);
+            } else {
+                ruleObj["rule"] = state.rule.flatMap(item =>
+                    unfold(item).map(vertices => ({ vertices }))
+                );
+            }
         } else {
-            ruleObj["rule"] = state.rule.flatMap(unfold).map(v => ({ vertices: v }));
+            if (state.rule.isLIR && state.rule.L && state.rule.I && state.rule.R) {
+                ruleObj["L"] = toHyperedges(state.rule.L);
+                ruleObj["I"] = toHyperedges(state.rule.I);
+                ruleObj["R"] = toHyperedges(state.rule.R);
+            }
+            else if (state.rule.sequence) {
+                ruleObj["rule"] = state.rule.sequence.flatMap((item: RuleNode | SeqItem) =>
+                    unfold(item).map(vertices => ({ vertices }))
+                );
+            }
         }
 
-        const json: any = {
+        const json: StateJson = {
             hypergraph,
             rule: ruleObj,
             steps: state.count,
             clean: true
         };
 
+        stateJsons.push(json);
         return `<li><pre>${JSON.stringify(json, null, 2)}</pre></li>`;
     }).join("") + "</ul>";
 });
-  
+
+sendButton?.addEventListener("click", async () => {
+    if (stateJsons.length === 0) {
+        console.error("No states to send");
+        return;
+    }
+
+    const lastState = stateJsons[stateJsons.length - 1];
+
+    try {
+        const response = await sendToServer(lastState);
+        console.log("Server response:", response);
+        alert("State successfully sent to server!");
+    } catch (error) {
+        console.error("Failed to send state:", error);
+        alert("Failed to send state to server");
+    }
+});
+
+async function sendToServer(data: StateJson): Promise<unknown> {
+    const response = await fetch(server_url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`);
+    }
+
+    return response.json();
+}

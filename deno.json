@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-read -allow-net --allow-write build.ts"
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "esnext",
+      "deno.ns"
+    ],
+    "strict": true
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "pegjs": "npm:pegjs@^0.10.0",
+    "ace-builds": "npm:ace-builds",
+    "@types/ace": "npm:@types/ace@0.0.52"
+  }
+}

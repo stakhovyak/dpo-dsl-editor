@@ -1,0 +1,25 @@
+^ This is a comment line
+
+^ The only data type in the dsl is an array of arrays.
+foo = (x,y)(a,b,c);
+bar = (A)(B,C);
+baz_quux = (p,q,r)(s)(t,u)(v,w,x,y,z);
+
+^ Declare rules with @predicate.
+@grow = (X) -> (Y,Z) -> (W);
+@chain = foo -> bar -> (D,E);
+
+^ Declare states with $predicate and use `<~` to apply rule to state or array
+$st_inline = (P)(Q,R) <~ (U)->(V)->(W);
+
+$st_named = (M,N) <~ @grow 3;
+
+$st_var = foo <~ @chain;
+
+$st_mixed = bar <~ (L)->(M,N)->(O) 5;
+
+^ Declare variables in one line
+foo2 = (1,2)(3); @R = (A)->(B)->(C); $s = (1)(2) <~ @R 2;
+
+^ Or combine them all together
+$final_test = baz_quux <~ @grow 1;

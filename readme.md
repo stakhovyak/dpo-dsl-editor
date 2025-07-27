@@ -1,5 +1,12 @@
 # DSL frontend
 
+## Syntax
+
+<p align="center">
+  <img src="" alt="sparrow logo" width="300" height="300"/>
+</p>
+
+
 ## Objects
 
 ### Basic variables

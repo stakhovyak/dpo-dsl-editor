@@ -747,6 +747,9 @@ function peg$parse(input, options) {
         s6 = peg$parseIdentifier();
         if (s6 === peg$FAILED) {
           s6 = peg$parseInlineArray();
+          if (s6 === peg$FAILED) {
+            s6 = peg$parseStateName();
+          }
         }
         if (s6 !== peg$FAILED) {
           while (s6 !== peg$FAILED) {
@@ -754,6 +757,9 @@ function peg$parse(input, options) {
             s6 = peg$parseIdentifier();
             if (s6 === peg$FAILED) {
               s6 = peg$parseInlineArray();
+              if (s6 === peg$FAILED) {
+                s6 = peg$parseStateName();
+              }
             }
           }
         } else {

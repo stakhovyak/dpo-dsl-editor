@@ -24584,6 +24584,9 @@ var require_parser = __commonJS({
             s6 = peg$parseIdentifier();
             if (s6 === peg$FAILED) {
               s6 = peg$parseInlineArray();
+              if (s6 === peg$FAILED) {
+                s6 = peg$parseStateName();
+              }
             }
             if (s6 !== peg$FAILED) {
               while (s6 !== peg$FAILED) {
@@ -24591,6 +24594,9 @@ var require_parser = __commonJS({
                 s6 = peg$parseIdentifier();
                 if (s6 === peg$FAILED) {
                   s6 = peg$parseInlineArray();
+                  if (s6 === peg$FAILED) {
+                    s6 = peg$parseStateName();
+                  }
                 }
               }
             } else {
@@ -25156,7 +25162,7 @@ $st_var = foo <~ @chain;
 $st_mixed = bar <~ (L)->(M,N)->(O) 5;
 
 ^ Or combine them all together
-$final_test = baz_quux <~ @grow 1;
+$final_test = $st_mixed <~ @grow 1;
 `;
 var editor = ace2.edit("editor");
 editor.setOptions({
@@ -25168,9 +25174,10 @@ editor.setOptions({
 editor.session.on("change", () => {
 });
 var runButton = document.getElementById("run-button");
-function validateAST(ast) {
+function validateAST(ast, states) {
   const variables = /* @__PURE__ */ new Set();
   const rules = /* @__PURE__ */ new Set();
+  const stateNames = new Set(states.map((s) => s.name));
   const errors = [];
   for (const node of ast) {
     if (node.type === "array") variables.add(node.name);
@@ -25189,8 +25196,8 @@ function validateAST(ast) {
       }
     }
     if (node.type === "state" && typeof node.source === "string") {
-      if (!variables.has(node.source)) {
-        errors.push(`Unknown variable '${node.source}' in state '${node.name}'`);
+      if (!variables.has(node.source) && !stateNames.has(node.source)) {
+        errors.push(`Unknown variable or state '${node.source}' in state '${node.name}'`);
       }
     }
   }
@@ -25216,21 +25223,51 @@ runButton?.addEventListener("click", () => {
       states.push(node);
     }
   }
-  const errors = validateAST(ast);
+  const errors = validateAST(ast, states);
   if (errors.length) {
     console.error("Semantic errors:\n" + errors.join("\n"));
     return;
   }
+  console.info(ast);
   const panel = document.getElementById("detected-states");
   panel.innerHTML = "<ul>" + states.map((state) => {
     const unfold = (item) => item.type === "inline" ? [
       item.value
     ] : item.type === "varRef" ? arrays.get(item.name) ?? [] : rules.get(item.name)?.flatMap(unfold) ?? [];
-    const srcGroups = typeof state.source === "string" ? arrays.get(state.source) ?? [] : state.source;
-    const hypergraph = srcGroups.map((g) => ({
-      vertices: g
-    }));
-    let ruleObj = {};
+    const buildHypergraph = (source) => {
+      if (typeof source === "string") {
+        const referencedState = states.find((s) => s.name === source);
+        if (referencedState) {
+          return {
+            hypergraph: buildHypergraph(referencedState.source),
+            rule: referencedState.rule.flatMap(unfold).map((v) => ({
+              vertices: v
+            })),
+            steps: referencedState.count,
+            clean: true
+          };
+        } else {
+          return (arrays.get(source) ?? []).map((g) => ({
+            vertices: g
+          }));
+        }
+      } else if (Array.isArray(source)) {
+        return source.map((g) => ({
+          vertices: g
+        }));
+      } else {
+        return {
+          hypergraph: buildHypergraph(source.source),
+          rule: source.rule.flatMap(unfold).map((v) => ({
+            vertices: v
+          })),
+          steps: source.count,
+          clean: true
+        };
+      }
+    };
+    const hypergraph = buildHypergraph(state.source);
+    const ruleObj = {};
     if (state.rule.length === 1 && state.rule[0].type === "ruleRef") {
       const nm = state.rule[0].name;
       ruleObj[nm] = (rules.get(nm) ?? []).flatMap(unfold).map((v) => ({

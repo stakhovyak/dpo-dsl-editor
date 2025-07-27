@@ -43,7 +43,7 @@ RuleAssignment
 
 // 3) $s = source <~ SeqItem->SeqItem->SeqItem [count]
 StateAssignment
-  = name:StateName _ "=" _ source:(Identifier / InlineArray)+ _
+  = name:StateName _ "=" _ source:(Identifier / InlineArray / StateName)+ _
     "<~" _ rulePart:(Exact3Sequence / RuleName) _ cnt:Integer? {
         return {
             type:  "state",

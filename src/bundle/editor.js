@@ -62,15 +62,15 @@ var require_ace = __commonJS({
           var params = [];
           for (var i = 0, l = module2.length; i < l; ++i) {
             var dep = lookup(parentId, module2[i]);
-            if (dep == void 0 && require3.original) return;
+            if (dep == void 0 && require2.original) return;
             params.push(dep);
           }
           return callback && callback.apply(null, params) || true;
         }
       };
-      var require3 = function(module2, callback) {
+      var require2 = function(module2, callback) {
         var packagedModule = _require("", module2, callback);
-        if (packagedModule == void 0 && require3.original) return require3.original.apply(this, arguments);
+        if (packagedModule == void 0 && require2.original) return require2.original.apply(this, arguments);
         return packagedModule;
       };
       var normalizeModule = function(parentId, moduleName) {
@@ -125,8 +125,8 @@ var require_ace = __commonJS({
           root.define.packaged = true;
         }
         if (!root.require || !root.require.packaged) {
-          require3.original = root.require;
-          root.require = require3;
+          require2.original = root.require;
+          root.require = require2;
           root.require.packaged = true;
         }
       }
@@ -136,7 +136,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       function defineProp(obj, name, val) {
         Object.defineProperty(obj, name, {
           value: val,
@@ -259,15 +259,15 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/es6-shim"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      require3("./es6-shim");
+      require2("./es6-shim");
     });
     ace.define("ace/lib/deep_copy", [
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       exports2.deepCopy = function deepCopy(obj) {
         if (typeof obj !== "object" || !obj) return obj;
         var copy;
@@ -289,7 +289,7 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/deep_copy"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       exports2.last = function(a) {
         return a[a.length - 1];
@@ -328,7 +328,7 @@ var require_ace = __commonJS({
         }
         return copy;
       };
-      exports2.deepCopy = require3("./deep_copy").deepCopy;
+      exports2.deepCopy = require2("./deep_copy").deepCopy;
       exports2.arrayToMap = function(arr) {
         var map = {};
         for (var i = 0; i < arr.length; i++) {
@@ -436,7 +436,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       exports2.OS = {
         LINUX: "LINUX",
@@ -481,9 +481,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var useragent = require3("./useragent");
+      var useragent = require2("./useragent");
       var XHTML_NS = "http://www.w3.org/1999/xhtml";
       exports2.buildDom = function buildDom(arr, parent, refs) {
         if (typeof arr == "string" && arr) {
@@ -718,9 +718,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("./dom");
+      var dom = require2("./dom");
       exports2.get = function(url, callback) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
@@ -753,7 +753,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       exports2.inherits = function(ctor, superCtor) {
         ctor.super_ = superCtor;
@@ -780,7 +780,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var EventEmitter = {};
       var stopPropagation = function() {
@@ -875,7 +875,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       exports2.reportError = function reportError(msg, data) {
         var e = new Error(msg);
         e["data"] = data;
@@ -889,7 +889,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       var defaultEnglishMessages = {
         "autocomplete.popup.aria-roledescription": "Autocomplete suggestions",
         "autocomplete.popup.aria-label": "Autocomplete suggestions",
@@ -949,12 +949,12 @@ var require_ace = __commonJS({
       "ace/lib/event_emitter",
       "ace/lib/report_error",
       "ace/lib/default_english_messages"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "no use strict";
-      var oop2 = require3("./oop");
-      var EventEmitter = require3("./event_emitter").EventEmitter;
-      var reportError = require3("./report_error").reportError;
-      var defaultEnglishMessages = require3("./default_english_messages").defaultEnglishMessages;
+      var oop = require2("./oop");
+      var EventEmitter = require2("./event_emitter").EventEmitter;
+      var reportError = require2("./report_error").reportError;
+      var defaultEnglishMessages = require2("./default_english_messages").defaultEnglishMessages;
       var optionsProvider = {
         setOptions: function(optList) {
           Object.keys(optList).forEach(function(key) {
@@ -1019,7 +1019,7 @@ var require_ace = __commonJS({
               obj.$options[opt.name] = opt;
               if ("initialValue" in opt) obj["$" + opt.name] = opt.initialValue;
             });
-            oop2.implement(obj, optionsProvider);
+            oop.implement(obj, optionsProvider);
             return this;
           };
           AppConfig2.prototype.resetOptions = function(obj) {
@@ -1078,14 +1078,14 @@ var require_ace = __commonJS({
       );
       AppConfig.prototype.warn = warn;
       AppConfig.prototype.reportError = reportError;
-      oop2.implement(AppConfig.prototype, EventEmitter);
+      oop.implement(AppConfig.prototype, EventEmitter);
       exports2.AppConfig = AppConfig;
     });
     ace.define("ace/theme/textmate-css", [
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       module2.exports = '.ace-tm .ace_gutter {\n  background: #f0f0f0;\n  color: #333;\n}\n\n.ace-tm .ace_print-margin {\n  width: 1px;\n  background: #e8e8e8;\n}\n\n.ace-tm .ace_fold {\n    background-color: #6B72E6;\n}\n\n.ace-tm {\n  background-color: #FFFFFF;\n  color: black;\n}\n\n.ace-tm .ace_cursor {\n  color: black;\n}\n        \n.ace-tm .ace_invisible {\n  color: rgb(191, 191, 191);\n}\n\n.ace-tm .ace_storage,\n.ace-tm .ace_keyword {\n  color: blue;\n}\n\n.ace-tm .ace_constant {\n  color: rgb(197, 6, 11);\n}\n\n.ace-tm .ace_constant.ace_buildin {\n  color: rgb(88, 72, 246);\n}\n\n.ace-tm .ace_constant.ace_language {\n  color: rgb(88, 92, 246);\n}\n\n.ace-tm .ace_constant.ace_library {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_invalid {\n  background-color: rgba(255, 0, 0, 0.1);\n  color: red;\n}\n\n.ace-tm .ace_support.ace_function {\n  color: rgb(60, 76, 114);\n}\n\n.ace-tm .ace_support.ace_constant {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_support.ace_type,\n.ace-tm .ace_support.ace_class {\n  color: rgb(109, 121, 222);\n}\n\n.ace-tm .ace_keyword.ace_operator {\n  color: rgb(104, 118, 135);\n}\n\n.ace-tm .ace_string {\n  color: rgb(3, 106, 7);\n}\n\n.ace-tm .ace_comment {\n  color: rgb(76, 136, 107);\n}\n\n.ace-tm .ace_comment.ace_doc {\n  color: rgb(0, 102, 255);\n}\n\n.ace-tm .ace_comment.ace_doc.ace_tag {\n  color: rgb(128, 159, 191);\n}\n\n.ace-tm .ace_constant.ace_numeric {\n  color: rgb(0, 0, 205);\n}\n\n.ace-tm .ace_variable {\n  color: rgb(49, 132, 149);\n}\n\n.ace-tm .ace_xml-pe {\n  color: rgb(104, 104, 91);\n}\n\n.ace-tm .ace_entity.ace_name.ace_function {\n  color: #0000A2;\n}\n\n\n.ace-tm .ace_heading {\n  color: rgb(12, 7, 255);\n}\n\n.ace-tm .ace_list {\n  color:rgb(185, 6, 144);\n}\n\n.ace-tm .ace_meta.ace_tag {\n  color:rgb(0, 22, 142);\n}\n\n.ace-tm .ace_string.ace_regex {\n  color: rgb(255, 0, 0)\n}\n\n.ace-tm .ace_marker-layer .ace_selection {\n  background: rgb(181, 213, 255);\n}\n.ace-tm.ace_multiselect .ace_selection.ace_start {\n  box-shadow: 0 0 3px 0px white;\n}\n.ace-tm .ace_marker-layer .ace_step {\n  background: rgb(252, 255, 0);\n}\n\n.ace-tm .ace_marker-layer .ace_stack {\n  background: rgb(164, 229, 101);\n}\n\n.ace-tm .ace_marker-layer .ace_bracket {\n  margin: -1px 0 0 -1px;\n  border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-tm .ace_marker-layer .ace_active-line {\n  background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-tm .ace_gutter-active-line {\n    background-color : #dcdcdc;\n}\n\n.ace-tm .ace_marker-layer .ace_selected-word {\n  background: rgb(250, 250, 255);\n  border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-tm .ace_indent-guide {\n  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;\n}\n\n.ace-tm .ace_indent-guide-active {\n  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC") right repeat-y;\n}\n';
     });
     ace.define("ace/theme/textmate", [
@@ -1094,13 +1094,13 @@ var require_ace = __commonJS({
       "module",
       "ace/theme/textmate-css",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       exports2.isDark = false;
       exports2.cssClass = "ace-tm";
-      exports2.cssText = require3("./textmate-css");
+      exports2.cssText = require2("./textmate-css");
       exports2.$id = "ace/theme/textmate";
-      var dom = require3("../lib/dom");
+      var dom = require2("../lib/dom");
       dom.importCssString(exports2.cssText, exports2.cssClass, false);
     });
     ace.define("ace/config", [
@@ -1112,12 +1112,12 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/lib/app_config",
       "ace/theme/textmate"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "no use strict";
-      var lang = require3("./lib/lang");
-      var net = require3("./lib/net");
-      var dom = require3("./lib/dom");
-      var AppConfig = require3("./lib/app_config").AppConfig;
+      var lang = require2("./lib/lang");
+      var net = require2("./lib/net");
+      var dom = require2("./lib/dom");
+      var AppConfig = require2("./lib/app_config").AppConfig;
       module2.exports = exports2 = new AppConfig();
       var options = {
         packaged: false,
@@ -1168,7 +1168,7 @@ var require_ace = __commonJS({
         return options.$moduleUrls[name] = subst;
       };
       var loader = function(moduleName, cb) {
-        if (moduleName === "ace/theme/textmate" || moduleName === "./theme/textmate") return cb(null, require3("./theme/textmate"));
+        if (moduleName === "ace/theme/textmate" || moduleName === "./theme/textmate") return cb(null, require2("./theme/textmate"));
         if (customLoader) return customLoader(moduleName, cb);
         console.error("loader is not configured");
       };
@@ -1250,12 +1250,12 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/fixoldbrowsers",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      require3("./lib/fixoldbrowsers");
-      var config = require3("./config");
+      require2("./lib/fixoldbrowsers");
+      var config = require2("./config");
       config.setLoader(function(moduleName, cb) {
-        require3([
+        require2([
           moduleName
         ], function(module3) {
           cb(null, module3);
@@ -1266,14 +1266,14 @@ var require_ace = __commonJS({
       }();
       module2.exports = function(ace3) {
         config.init = init;
-        config.$require = require3;
-        ace3.require = require3;
+        config.$require = require2;
+        ace3.require = require2;
         if (typeof define === "function") ace3.define = define;
       };
       init(true);
       function init(packaged) {
         if (!global || !global.document) return;
-        config.set("packaged", packaged || require3.packaged || module2.packaged || global.define && define.packaged);
+        config.set("packaged", packaged || require2.packaged || module2.packaged || global.define && define.packaged);
         var scriptOptions = {};
         var scriptUrl = "";
         var currentScript = document.currentScript || document._currentScript;
@@ -1317,7 +1317,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var Range = (
         /** @class */
@@ -1537,9 +1537,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/oop"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./oop");
+      var oop = require2("./oop");
       var Keys = {
         MODIFIER_KEYS: {
           16: "Shift",
@@ -1675,9 +1675,9 @@ var require_ace = __commonJS({
         var name = Keys.PRINTABLE_KEYS[j].toLowerCase();
         Keys[name] = parseInt(j, 10);
       }
-      oop2.mixin(Keys, Keys.MODIFIER_KEYS);
-      oop2.mixin(Keys, Keys.PRINTABLE_KEYS);
-      oop2.mixin(Keys, Keys.FUNCTION_KEYS);
+      oop.mixin(Keys, Keys.MODIFIER_KEYS);
+      oop.mixin(Keys, Keys.PRINTABLE_KEYS);
+      oop.mixin(Keys, Keys.FUNCTION_KEYS);
       Keys.enter = Keys["return"];
       Keys.escape = Keys.esc;
       Keys.del = Keys["delete"];
@@ -1696,7 +1696,7 @@ var require_ace = __commonJS({
       })();
       Keys.KEY_MODS[0] = "";
       Keys.KEY_MODS[-1] = "input-";
-      oop2.mixin(exports2, Keys);
+      oop.mixin(exports2, Keys);
       exports2.default = exports2;
       exports2.keyCodeToString = function(keyCode) {
         var keyString = Keys[keyCode];
@@ -1710,10 +1710,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/keys",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var keys = require3("./keys");
-      var useragent = require3("./useragent");
+      var keys = require2("./keys");
+      var useragent = require2("./useragent");
       var pressedKeys = null;
       var ts = 0;
       var activeListenerOptions;
@@ -1962,7 +1962,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var $cancelT;
       module2.exports = {
@@ -1987,19 +1987,19 @@ var require_ace = __commonJS({
       "ace/lib/lang",
       "ace/clipboard",
       "ace/lib/keys"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var event = require3("../lib/event");
-      var nls = require3("../config").nls;
-      var useragent = require3("../lib/useragent");
-      var dom = require3("../lib/dom");
-      var lang = require3("../lib/lang");
-      var clipboard = require3("../clipboard");
+      var event = require2("../lib/event");
+      var nls = require2("../config").nls;
+      var useragent = require2("../lib/useragent");
+      var dom = require2("../lib/dom");
+      var lang = require2("../lib/lang");
+      var clipboard = require2("../clipboard");
       var BROKEN_SETDATA = useragent.isChrome < 18;
       var USE_IE_MIME_TYPE = useragent.isIE;
       var HAS_FOCUS_ARGS = useragent.isChrome > 63;
       var MAX_LINE_LENGTH = 400;
-      var KEYS = require3("../lib/keys");
+      var KEYS = require2("../lib/keys");
       var MODS = KEYS.KEY_MODS;
       var isIOS = useragent.isIOS;
       var valueResetRegex = isIOS ? /\s/ : /\n/;
@@ -2643,9 +2643,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var useragent = require3("../lib/useragent");
+      var useragent = require2("../lib/useragent");
       var DRAG_OFFSET = 0;
       var SCROLL_COOLDOWN_T = 550;
       var DefaultHandlers = (
@@ -2879,7 +2879,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       exports2.preventParentScroll = function preventParentScroll(event) {
         event.stopPropagation();
         var target = event.currentTarget;
@@ -2897,7 +2897,7 @@ var require_ace = __commonJS({
       "ace/lib/event",
       "ace/range",
       "ace/lib/scroll"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -2933,10 +2933,10 @@ var require_ace = __commonJS({
         };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
       };
-      var dom = require3("./lib/dom");
-      var event = require3("./lib/event");
-      var Range = require3("./range").Range;
-      var preventParentScroll = require3("./lib/scroll").preventParentScroll;
+      var dom = require2("./lib/dom");
+      var event = require2("./lib/event");
+      var Range = require2("./range").Range;
+      var preventParentScroll = require2("./lib/scroll").preventParentScroll;
       var CLASSNAME = "ace_tooltip";
       var Tooltip = (
         /** @class */
@@ -3249,7 +3249,7 @@ var require_ace = __commonJS({
       "ace/lib/event",
       "ace/tooltip",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -3285,10 +3285,10 @@ var require_ace = __commonJS({
         };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
       };
-      var dom = require3("../lib/dom");
-      var event = require3("../lib/event");
-      var Tooltip = require3("../tooltip").Tooltip;
-      var nls = require3("../config").nls;
+      var dom = require2("../lib/dom");
+      var event = require2("../lib/event");
+      var Tooltip = require2("../tooltip").Tooltip;
+      var nls = require2("../config").nls;
       var GUTTER_TOOLTIP_LEFT_OFFSET = 5;
       var GUTTER_TOOLTIP_TOP_OFFSET = 3;
       exports2.GUTTER_TOOLTIP_LEFT_OFFSET = GUTTER_TOOLTIP_LEFT_OFFSET;
@@ -3626,10 +3626,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/event",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var event = require3("../lib/event");
-      var useragent = require3("../lib/useragent");
+      var event = require2("../lib/event");
+      var useragent = require2("../lib/useragent");
       var MouseEvent = (
         /** @class */
         function() {
@@ -3701,11 +3701,11 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/lib/event",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
-      var event = require3("../lib/event");
-      var useragent = require3("../lib/useragent");
+      var dom = require2("../lib/dom");
+      var event = require2("../lib/event");
+      var useragent = require2("../lib/useragent");
       var AUTOSCROLL_DELAY = 200;
       var SCROLL_CURSOR_DELAY = 200;
       var SCROLL_CURSOR_HYSTERESIS = 5;
@@ -4044,11 +4044,11 @@ var require_ace = __commonJS({
       "ace/mouse/mouse_event",
       "ace/lib/event",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var MouseEvent = require3("./mouse_event").MouseEvent;
-      var event = require3("../lib/event");
-      var dom = require3("../lib/dom");
+      var MouseEvent = require2("./mouse_event").MouseEvent;
+      var event = require2("../lib/event");
+      var dom = require2("../lib/dom");
       exports2.addTouchListeners = function(el, editor2) {
         var mode = "scroll";
         var startX;
@@ -4394,16 +4394,16 @@ var require_ace = __commonJS({
       "ace/mouse/dragdrop_handler",
       "ace/mouse/touch_handler",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var event = require3("../lib/event");
-      var useragent = require3("../lib/useragent");
-      var DefaultHandlers = require3("./default_handlers").DefaultHandlers;
-      var DefaultGutterHandler = require3("./default_gutter_handler").GutterHandler;
-      var MouseEvent = require3("./mouse_event").MouseEvent;
-      var DragdropHandler = require3("./dragdrop_handler").DragdropHandler;
-      var addTouchListeners = require3("./touch_handler").addTouchListeners;
-      var config = require3("../config");
+      var event = require2("../lib/event");
+      var useragent = require2("../lib/useragent");
+      var DefaultHandlers = require2("./default_handlers").DefaultHandlers;
+      var DefaultGutterHandler = require2("./default_gutter_handler").GutterHandler;
+      var MouseEvent = require2("./mouse_event").MouseEvent;
+      var DragdropHandler = require2("./dragdrop_handler").DragdropHandler;
+      var addTouchListeners = require2("./touch_handler").addTouchListeners;
+      var config = require2("../config");
       var MouseHandler = (
         /** @class */
         function() {
@@ -4586,9 +4586,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
+      var dom = require2("../lib/dom");
       var FoldHandler = (
         /** @class */
         /* @__PURE__ */ function() {
@@ -4655,10 +4655,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/keys",
       "ace/lib/event"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var keyUtil = require3("../lib/keys");
-      var event = require3("../lib/event");
+      var keyUtil = require2("../lib/keys");
+      var event = require2("../lib/event");
       var KeyBinding = (
         /** @class */
         function() {
@@ -4749,7 +4749,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var ArabicAlefBetIntervalsBegine = [
         "\u0621",
@@ -5415,10 +5415,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/bidiutil",
       "ace/lib/lang"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var bidiUtil = require3("./lib/bidiutil");
-      var lang = require3("./lib/lang");
+      var bidiUtil = require2("./lib/bidiutil");
+      var lang = require2("./lib/lang");
       var bidiRE = /[\u0590-\u05f4\u0600-\u06ff\u0700-\u08ac\u202B]/;
       var BidiHandler = (
         /** @class */
@@ -5657,12 +5657,12 @@ var require_ace = __commonJS({
       "ace/lib/lang",
       "ace/lib/event_emitter",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var lang = require3("./lib/lang");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var Range = require3("./range").Range;
+      var oop = require2("./lib/oop");
+      var lang = require2("./lib/lang");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var Range = require2("./range").Range;
       var Selection = (
         /** @class */
         function() {
@@ -6169,7 +6169,7 @@ var require_ace = __commonJS({
       Selection.prototype.setSelectionAnchor = Selection.prototype.setAnchor;
       Selection.prototype.getSelectionAnchor = Selection.prototype.getAnchor;
       Selection.prototype.setSelectionRange = Selection.prototype.setRange;
-      oop2.implement(Selection.prototype, EventEmitter);
+      oop.implement(Selection.prototype, EventEmitter);
       exports2.Selection = Selection;
     });
     ace.define("ace/tokenizer", [
@@ -6177,9 +6177,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/report_error"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var reportError = require3("./lib/report_error").reportError;
+      var reportError = require2("./lib/report_error").reportError;
       var MAX_TOKEN_COUNT = 2e3;
       var Tokenizer = (
         /** @class */
@@ -6454,11 +6454,11 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/deep_copy"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var deepCopy = require3("../lib/deep_copy").deepCopy;
-      var TextHighlightRules2;
-      TextHighlightRules2 = function() {
+      var deepCopy = require2("../lib/deep_copy").deepCopy;
+      var TextHighlightRules;
+      TextHighlightRules = function() {
         this.$rules = {
           "start": [
             {
@@ -6625,14 +6625,14 @@ var require_ace = __commonJS({
         this.getKeywords = function() {
           return this.$keywords;
         };
-      }).call(TextHighlightRules2.prototype);
-      exports2.TextHighlightRules = TextHighlightRules2;
+      }).call(TextHighlightRules.prototype);
+      exports2.TextHighlightRules = TextHighlightRules;
     });
     ace.define("ace/mode/behaviour", [
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var Behaviour;
       Behaviour = function() {
@@ -6689,9 +6689,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("./range").Range;
+      var Range = require2("./range").Range;
       var TokenIterator = (
         /** @class */
         function() {
@@ -6772,12 +6772,12 @@ var require_ace = __commonJS({
       "ace/mode/behaviour",
       "ace/token_iterator",
       "ace/lib/lang"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("../../lib/oop");
-      var Behaviour = require3("../behaviour").Behaviour;
-      var TokenIterator = require3("../../token_iterator").TokenIterator;
-      var lang = require3("../../lib/lang");
+      var oop = require2("../../lib/oop");
+      var Behaviour = require2("../behaviour").Behaviour;
+      var TokenIterator = require2("../../token_iterator").TokenIterator;
+      var lang = require2("../../lib/lang");
       var SAFE_INSERT_IN_TOKENS = [
         "text",
         "paren.rparen",
@@ -7239,14 +7239,14 @@ var require_ace = __commonJS({
           context.maybeInsertedRow = -1;
         }
       };
-      oop2.inherits(CstyleBehaviour, Behaviour);
+      oop.inherits(CstyleBehaviour, Behaviour);
       exports2.CstyleBehaviour = CstyleBehaviour;
     });
     ace.define("ace/unicode", [
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var wordChars = [
         48,
@@ -8118,19 +8118,19 @@ var require_ace = __commonJS({
       "ace/lib/lang",
       "ace/token_iterator",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var config = require3("../config");
-      var Tokenizer = require3("../tokenizer").Tokenizer;
-      var TextHighlightRules2 = require3("./text_highlight_rules").TextHighlightRules;
-      var CstyleBehaviour = require3("./behaviour/cstyle").CstyleBehaviour;
-      var unicode = require3("../unicode");
-      var lang = require3("../lib/lang");
-      var TokenIterator = require3("../token_iterator").TokenIterator;
-      var Range = require3("../range").Range;
+      var config = require2("../config");
+      var Tokenizer = require2("../tokenizer").Tokenizer;
+      var TextHighlightRules = require2("./text_highlight_rules").TextHighlightRules;
+      var CstyleBehaviour = require2("./behaviour/cstyle").CstyleBehaviour;
+      var unicode = require2("../unicode");
+      var lang = require2("../lib/lang");
+      var TokenIterator = require2("../token_iterator").TokenIterator;
+      var Range = require2("../range").Range;
       var Mode;
       Mode = function() {
-        this.HighlightRules = TextHighlightRules2;
+        this.HighlightRules = TextHighlightRules;
       };
       (function() {
         this.$defaultBehaviour = new CstyleBehaviour();
@@ -8432,9 +8432,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("./lib/dom");
+      var dom = require2("./lib/dom");
       var LineWidgets = (
         /** @class */
         function() {
@@ -8759,7 +8759,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       function throwDeltaError(delta, errorText) {
         console.log("Invalid Delta:", delta);
@@ -8817,10 +8817,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/oop",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
+      var oop = require2("./lib/oop");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
       var Anchor = (
         /** @class */
         function() {
@@ -8893,7 +8893,7 @@ var require_ace = __commonJS({
         }()
       );
       Anchor.prototype.$insertRight = false;
-      oop2.implement(Anchor.prototype, EventEmitter);
+      oop.implement(Anchor.prototype, EventEmitter);
       function $pointsInOrder(point1, point2, equalPointsInOrder) {
         var bColIsAfter = equalPointsInOrder ? point1.column <= point2.column : point1.column < point2.column;
         return point1.row < point2.row || point1.row == point2.row && bColIsAfter;
@@ -8932,13 +8932,13 @@ var require_ace = __commonJS({
       "ace/lib/event_emitter",
       "ace/range",
       "ace/anchor"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var applyDelta = require3("./apply_delta").applyDelta;
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var Range = require3("./range").Range;
-      var Anchor = require3("./anchor").Anchor;
+      var oop = require2("./lib/oop");
+      var applyDelta = require2("./apply_delta").applyDelta;
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var Range = require2("./range").Range;
+      var Anchor = require2("./anchor").Anchor;
       var Document = (
         /** @class */
         function() {
@@ -9299,7 +9299,7 @@ var require_ace = __commonJS({
       );
       Document.prototype.$autoNewLine = "";
       Document.prototype.$newLineMode = "auto";
-      oop2.implement(Document.prototype, EventEmitter);
+      oop.implement(Document.prototype, EventEmitter);
       exports2.Document = Document;
     });
     ace.define("ace/background_tokenizer", [
@@ -9308,10 +9308,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/oop",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
+      var oop = require2("./lib/oop");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
       var BackgroundTokenizer = (
         /** @class */
         function() {
@@ -9434,7 +9434,7 @@ var require_ace = __commonJS({
           return BackgroundTokenizer2;
         }()
       );
-      oop2.implement(BackgroundTokenizer.prototype, EventEmitter);
+      oop.implement(BackgroundTokenizer.prototype, EventEmitter);
       exports2.BackgroundTokenizer = BackgroundTokenizer;
     });
     ace.define("ace/search_highlight", [
@@ -9443,10 +9443,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/lang",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var lang = require3("./lib/lang");
-      var Range = require3("./range").Range;
+      var lang = require2("./lib/lang");
+      var Range = require2("./range").Range;
       var SearchHighlight = (
         /** @class */
         function() {
@@ -9514,7 +9514,7 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var UndoManager = (
         /** @class */
@@ -9703,7 +9703,7 @@ var require_ace = __commonJS({
           }
         }
       }
-      var Range = require3("./range").Range;
+      var Range = require2("./range").Range;
       var cmp = Range.comparePoints;
       var comparePoints = Range.comparePoints;
       function $updateMarkers(delta) {
@@ -9974,9 +9974,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("../range").Range;
+      var Range = require2("../range").Range;
       var FoldLine = (
         /** @class */
         function() {
@@ -10168,9 +10168,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("./range").Range;
+      var Range = require2("./range").Range;
       var comparePoints = Range.comparePoints;
       var RangeList = (
         /** @class */
@@ -10376,7 +10376,7 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range_list"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -10398,7 +10398,7 @@ var require_ace = __commonJS({
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       }();
-      var RangeList = require3("../range_list").RangeList;
+      var RangeList = require2("../range_list").RangeList;
       var Fold = (
         /** @class */
         function(_super) {
@@ -10493,13 +10493,13 @@ var require_ace = __commonJS({
       "ace/edit_session/fold",
       "ace/token_iterator",
       "ace/mouse/mouse_event"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("../range").Range;
-      var FoldLine = require3("./fold_line").FoldLine;
-      var Fold = require3("./fold").Fold;
-      var TokenIterator = require3("../token_iterator").TokenIterator;
-      var MouseEvent = require3("../mouse/mouse_event").MouseEvent;
+      var Range = require2("../range").Range;
+      var FoldLine = require2("./fold_line").FoldLine;
+      var Fold = require2("./fold").Fold;
+      var TokenIterator = require2("../token_iterator").TokenIterator;
+      var MouseEvent = require2("../mouse/mouse_event").MouseEvent;
       function Folding() {
         this.getFoldAt = function(row, column, side) {
           var foldLine = this.getFoldLine(row);
@@ -11123,10 +11123,10 @@ var require_ace = __commonJS({
       "module",
       "ace/token_iterator",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var TokenIterator = require3("../token_iterator").TokenIterator;
-      var Range = require3("../range").Range;
+      var TokenIterator = require2("../token_iterator").TokenIterator;
+      var Range = require2("../range").Range;
       function BracketMatch() {
         this.findMatchingBracket = function(position, chr) {
           if (position.column == 0) return null;
@@ -11466,21 +11466,21 @@ var require_ace = __commonJS({
       "ace/undomanager",
       "ace/edit_session/folding",
       "ace/edit_session/bracket_match"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var lang = require3("./lib/lang");
-      var BidiHandler = require3("./bidihandler").BidiHandler;
-      var config = require3("./config");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var Selection = require3("./selection").Selection;
-      var TextMode2 = require3("./mode/text").Mode;
-      var Range = require3("./range").Range;
-      var LineWidgets = require3("./line_widgets").LineWidgets;
-      var Document = require3("./document").Document;
-      var BackgroundTokenizer = require3("./background_tokenizer").BackgroundTokenizer;
-      var SearchHighlight = require3("./search_highlight").SearchHighlight;
-      var UndoManager = require3("./undomanager").UndoManager;
+      var oop = require2("./lib/oop");
+      var lang = require2("./lib/lang");
+      var BidiHandler = require2("./bidihandler").BidiHandler;
+      var config = require2("./config");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var Selection = require2("./selection").Selection;
+      var TextMode = require2("./mode/text").Mode;
+      var Range = require2("./range").Range;
+      var LineWidgets = require2("./line_widgets").LineWidgets;
+      var Document = require2("./document").Document;
+      var BackgroundTokenizer = require2("./background_tokenizer").BackgroundTokenizer;
+      var SearchHighlight = require2("./search_highlight").SearchHighlight;
+      var UndoManager = require2("./undomanager").UndoManager;
       var EditSession = (
         /** @class */
         function() {
@@ -11500,7 +11500,7 @@ var require_ace = __commonJS({
               return this.join("\n");
             };
             this.$gutterCustomWidgets = {};
-            this.bgTokenizer = new BackgroundTokenizer(new TextMode2().getTokenizer(), this);
+            this.bgTokenizer = new BackgroundTokenizer(new TextMode().getTokenizer(), this);
             var _self = this;
             this.bgTokenizer.on("update", function(e) {
               _self._signal("tokenizerUpdate", e);
@@ -11974,7 +11974,7 @@ var require_ace = __commonJS({
               path = /**@type{string}*/
               mode || "ace/mode/text";
             }
-            if (!this.$modes["ace/mode/text"]) this.$modes["ace/mode/text"] = new TextMode2();
+            if (!this.$modes["ace/mode/text"]) this.$modes["ace/mode/text"] = new TextMode();
             if (this.$modes[path] && !options) {
               this.$onChangeMode(this.$modes[path]);
               cb && cb();
@@ -12992,14 +12992,14 @@ var require_ace = __commonJS({
       };
       EditSession.prototype.lineWidgets = null;
       EditSession.prototype.isFullWidth = isFullWidth;
-      oop2.implement(EditSession.prototype, EventEmitter);
+      oop.implement(EditSession.prototype, EventEmitter);
       var CHAR = 1, CHAR_EXT = 2, PLACEHOLDER_START = 3, PLACEHOLDER_BODY = 4, PUNCTUATION = 9, SPACE = 10, TAB = 11, TAB_SPACE = 12;
       function isFullWidth(c) {
         if (c < 4352) return false;
         return c >= 4352 && c <= 4447 || c >= 4515 && c <= 4519 || c >= 4602 && c <= 4607 || c >= 9001 && c <= 9002 || c >= 11904 && c <= 11929 || c >= 11931 && c <= 12019 || c >= 12032 && c <= 12245 || c >= 12272 && c <= 12283 || c >= 12288 && c <= 12350 || c >= 12353 && c <= 12438 || c >= 12441 && c <= 12543 || c >= 12549 && c <= 12589 || c >= 12593 && c <= 12686 || c >= 12688 && c <= 12730 || c >= 12736 && c <= 12771 || c >= 12784 && c <= 12830 || c >= 12832 && c <= 12871 || c >= 12880 && c <= 13054 || c >= 13056 && c <= 19903 || c >= 19968 && c <= 42124 || c >= 42128 && c <= 42182 || c >= 43360 && c <= 43388 || c >= 44032 && c <= 55203 || c >= 55216 && c <= 55238 || c >= 55243 && c <= 55291 || c >= 63744 && c <= 64255 || c >= 65040 && c <= 65049 || c >= 65072 && c <= 65106 || c >= 65108 && c <= 65126 || c >= 65128 && c <= 65131 || c >= 65281 && c <= 65376 || c >= 65504 && c <= 65510;
       }
-      require3("./edit_session/folding").Folding.call(EditSession.prototype);
-      require3("./edit_session/bracket_match").BracketMatch.call(EditSession.prototype);
+      require2("./edit_session/folding").Folding.call(EditSession.prototype);
+      require2("./edit_session/bracket_match").BracketMatch.call(EditSession.prototype);
       config.defineOptions(EditSession.prototype, "session", {
         wrap: {
           set: function(value) {
@@ -13122,11 +13122,11 @@ var require_ace = __commonJS({
       "ace/lib/lang",
       "ace/lib/oop",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var lang = require3("./lib/lang");
-      var oop2 = require3("./lib/oop");
-      var Range = require3("./range").Range;
+      var lang = require2("./lib/lang");
+      var oop = require2("./lib/oop");
+      var Range = require2("./range").Range;
       var Search = (
         /** @class */
         function() {
@@ -13134,7 +13134,7 @@ var require_ace = __commonJS({
             this.$options = {};
           }
           Search2.prototype.set = function(options) {
-            oop2.mixin(this.$options, options);
+            oop.mixin(this.$options, options);
             return this;
           };
           Search2.prototype.getOptions = function() {
@@ -13548,7 +13548,7 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/keys",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -13570,8 +13570,8 @@ var require_ace = __commonJS({
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       }();
-      var keyUtil = require3("../lib/keys");
-      var useragent = require3("../lib/useragent");
+      var keyUtil = require2("../lib/keys");
+      var useragent = require2("../lib/useragent");
       var KEY_MODS = keyUtil.KEY_MODS;
       var MultiHashHandler = (
         /** @class */
@@ -13785,7 +13785,7 @@ var require_ace = __commonJS({
       "ace/lib/oop",
       "ace/keyboard/hash_handler",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -13807,9 +13807,9 @@ var require_ace = __commonJS({
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       }();
-      var oop2 = require3("../lib/oop");
-      var MultiHashHandler = require3("../keyboard/hash_handler").MultiHashHandler;
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
+      var oop = require2("../lib/oop");
+      var MultiHashHandler = require2("../keyboard/hash_handler").MultiHashHandler;
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
       var CommandManager = (
         /** @class */
         function(_super) {
@@ -13898,7 +13898,7 @@ var require_ace = __commonJS({
           return CommandManager2;
         }(MultiHashHandler)
       );
-      oop2.implement(CommandManager.prototype, EventEmitter);
+      oop.implement(CommandManager.prototype, EventEmitter);
       exports2.CommandManager = CommandManager;
     });
     ace.define("ace/commands/default_commands", [
@@ -13908,11 +13908,11 @@ var require_ace = __commonJS({
       "ace/lib/lang",
       "ace/config",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var lang = require3("../lib/lang");
-      var config = require3("../config");
-      var Range = require3("../range").Range;
+      var lang = require2("../lib/lang");
+      var config = require2("../config");
+      var Range = require2("../range").Range;
       function bindKey(win, mac) {
         return {
           win,
@@ -15045,10 +15045,10 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/keys",
       "ace/mouse/default_gutter_handler"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var keys = require3("../lib/keys");
-      var GutterTooltip = require3("../mouse/default_gutter_handler").GutterTooltip;
+      var keys = require2("../lib/keys");
+      var GutterTooltip = require2("../mouse/default_gutter_handler").GutterTooltip;
       var GutterKeyboardHandler = (
         /** @class */
         function() {
@@ -15470,7 +15470,7 @@ var require_ace = __commonJS({
       "ace/lib/keys",
       "ace/lib/event",
       "ace/tooltip"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __values = this && this.__values || function(o) {
         var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -15486,28 +15486,28 @@ var require_ace = __commonJS({
         };
         throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
       };
-      var oop2 = require3("./lib/oop");
-      var dom = require3("./lib/dom");
-      var lang = require3("./lib/lang");
-      var useragent = require3("./lib/useragent");
-      var TextInput = require3("./keyboard/textinput").TextInput;
-      var MouseHandler = require3("./mouse/mouse_handler").MouseHandler;
-      var FoldHandler = require3("./mouse/fold_handler").FoldHandler;
-      var KeyBinding = require3("./keyboard/keybinding").KeyBinding;
-      var EditSession = require3("./edit_session").EditSession;
-      var Search = require3("./search").Search;
-      var Range = require3("./range").Range;
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var CommandManager = require3("./commands/command_manager").CommandManager;
-      var defaultCommands = require3("./commands/default_commands").commands;
-      var config = require3("./config");
-      var TokenIterator = require3("./token_iterator").TokenIterator;
-      var GutterKeyboardHandler = require3("./keyboard/gutter_handler").GutterKeyboardHandler;
-      var nls = require3("./config").nls;
-      var clipboard = require3("./clipboard");
-      var keys = require3("./lib/keys");
-      var event = require3("./lib/event");
-      var HoverTooltip = require3("./tooltip").HoverTooltip;
+      var oop = require2("./lib/oop");
+      var dom = require2("./lib/dom");
+      var lang = require2("./lib/lang");
+      var useragent = require2("./lib/useragent");
+      var TextInput = require2("./keyboard/textinput").TextInput;
+      var MouseHandler = require2("./mouse/mouse_handler").MouseHandler;
+      var FoldHandler = require2("./mouse/fold_handler").FoldHandler;
+      var KeyBinding = require2("./keyboard/keybinding").KeyBinding;
+      var EditSession = require2("./edit_session").EditSession;
+      var Search = require2("./search").Search;
+      var Range = require2("./range").Range;
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var CommandManager = require2("./commands/command_manager").CommandManager;
+      var defaultCommands = require2("./commands/default_commands").commands;
+      var config = require2("./config");
+      var TokenIterator = require2("./token_iterator").TokenIterator;
+      var GutterKeyboardHandler = require2("./keyboard/gutter_handler").GutterKeyboardHandler;
+      var nls = require2("./config").nls;
+      var clipboard = require2("./clipboard");
+      var keys = require2("./lib/keys");
+      var event = require2("./lib/event");
+      var HoverTooltip = require2("./tooltip").HoverTooltip;
       var Editor = (
         /** @class */
         function() {
@@ -17002,7 +17002,7 @@ var require_ace = __commonJS({
           Editor2.prototype.find = function(needle, options, animate) {
             if (!options) options = {};
             if (typeof needle == "string" || needle instanceof RegExp) options.needle = needle;
-            else if (typeof needle == "object") oop2.mixin(options, needle);
+            else if (typeof needle == "object") oop.mixin(options, needle);
             var range = this.selection.getRange();
             if (options.needle == null) {
               needle = this.session.getTextRange(range) || this.$search.$options.needle;
@@ -17234,7 +17234,7 @@ var require_ace = __commonJS({
           "!="
         ]
       ];
-      oop2.implement(Editor.prototype, EventEmitter);
+      oop.implement(Editor.prototype, EventEmitter);
       config.defineOptions(Editor.prototype, "editor", {
         selectionStyle: {
           set: function(style) {
@@ -17569,9 +17569,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
+      var dom = require2("../lib/dom");
       var Lines = (
         /** @class */
         function() {
@@ -17676,14 +17676,14 @@ var require_ace = __commonJS({
       "ace/lib/event_emitter",
       "ace/layer/lines",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
-      var oop2 = require3("../lib/oop");
-      var lang = require3("../lib/lang");
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
-      var Lines = require3("./lines").Lines;
-      var nls = require3("../config").nls;
+      var dom = require2("../lib/dom");
+      var oop = require2("../lib/oop");
+      var lang = require2("../lib/lang");
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
+      var Lines = require2("./lines").Lines;
+      var nls = require2("../config").nls;
       var Gutter = (
         /** @class */
         function() {
@@ -18184,7 +18184,7 @@ var require_ace = __commonJS({
       Gutter.prototype.$renderer = "";
       Gutter.prototype.$showLineNumbers = true;
       Gutter.prototype.$showFoldWidgets = true;
-      oop2.implement(Gutter.prototype, EventEmitter);
+      oop.implement(Gutter.prototype, EventEmitter);
       function onCreateCell(element) {
         var textNode = document.createTextNode("");
         element.appendChild(textNode);
@@ -18204,10 +18204,10 @@ var require_ace = __commonJS({
       "module",
       "ace/range",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("../range").Range;
-      var dom = require3("../lib/dom");
+      var Range = require2("../range").Range;
+      var dom = require2("../lib/dom");
       var Marker = (
         /** @class */
         function() {
@@ -18361,7 +18361,7 @@ var require_ace = __commonJS({
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       var textTokens = /* @__PURE__ */ new Set([
         "text",
         "rparen",
@@ -18382,15 +18382,15 @@ var require_ace = __commonJS({
       "ace/lib/event_emitter",
       "ace/config",
       "ace/layer/text_util"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("../lib/oop");
-      var dom = require3("../lib/dom");
-      var lang = require3("../lib/lang");
-      var Lines = require3("./lines").Lines;
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
-      var nls = require3("../config").nls;
-      var isTextToken = require3("./text_util").isTextToken;
+      var oop = require2("../lib/oop");
+      var dom = require2("../lib/dom");
+      var lang = require2("../lib/lang");
+      var Lines = require2("./lines").Lines;
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
+      var nls = require2("../config").nls;
+      var isTextToken = require2("./text_util").isTextToken;
       var Text = (
         /** @class */
         function() {
@@ -18958,7 +18958,7 @@ var require_ace = __commonJS({
       Text.prototype.$tabStrings = [];
       Text.prototype.destroy = {};
       Text.prototype.onChangeTabSize = Text.prototype.$computeTabString;
-      oop2.implement(Text.prototype, EventEmitter);
+      oop.implement(Text.prototype, EventEmitter);
       exports2.Text = Text;
     });
     ace.define("ace/layer/cursor", [
@@ -18966,9 +18966,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/dom"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
+      var dom = require2("../lib/dom");
       var Cursor = (
         /** @class */
         function() {
@@ -19173,7 +19173,7 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/lib/event",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -19195,10 +19195,10 @@ var require_ace = __commonJS({
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       }();
-      var oop2 = require3("./lib/oop");
-      var dom = require3("./lib/dom");
-      var event = require3("./lib/event");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
+      var oop = require2("./lib/oop");
+      var dom = require2("./lib/dom");
+      var event = require2("./lib/event");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
       var MAX_SCROLL_H = 32768;
       var Scrollbar = (
         /** @class */
@@ -19224,7 +19224,7 @@ var require_ace = __commonJS({
           return Scrollbar2;
         }()
       );
-      oop2.implement(Scrollbar.prototype, EventEmitter);
+      oop.implement(Scrollbar.prototype, EventEmitter);
       var VScrollBar = (
         /** @class */
         function(_super) {
@@ -19333,7 +19333,7 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/lib/event",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
       var __extends = this && this.__extends || /* @__PURE__ */ function() {
         var extendStatics = function(d, b) {
@@ -19355,10 +19355,10 @@ var require_ace = __commonJS({
           d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
         };
       }();
-      var oop2 = require3("./lib/oop");
-      var dom = require3("./lib/dom");
-      var event = require3("./lib/event");
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
+      var oop = require2("./lib/oop");
+      var dom = require2("./lib/dom");
+      var event = require2("./lib/event");
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
       dom.importCssString(".ace_editor>.ace_sb-v div, .ace_editor>.ace_sb-h div{\n  position: absolute;\n  background: rgba(128, 128, 128, 0.6);\n  -moz-box-sizing: border-box;\n  box-sizing: border-box;\n  border: 1px solid #bbb;\n  border-radius: 2px;\n  z-index: 8;\n}\n.ace_editor>.ace_sb-v, .ace_editor>.ace_sb-h {\n  position: absolute;\n  z-index: 6;\n  background: none;\n  overflow: hidden!important;\n}\n.ace_editor>.ace_sb-v {\n  z-index: 6;\n  right: 0;\n  top: 0;\n  width: 12px;\n}\n.ace_editor>.ace_sb-v div {\n  z-index: 8;\n  right: 0;\n  width: 100%;\n}\n.ace_editor>.ace_sb-h {\n  bottom: 0;\n  left: 0;\n  height: 12px;\n}\n.ace_editor>.ace_sb-h div {\n  bottom: 0;\n  height: 100%;\n}\n.ace_editor>.ace_sb_grabbed {\n  z-index: 8;\n  background: #000;\n}", "ace_scrollbar.css", false);
       var ScrollBar = (
         /** @class */
@@ -19388,7 +19388,7 @@ var require_ace = __commonJS({
           return ScrollBar2;
         }()
       );
-      oop2.implement(ScrollBar.prototype, EventEmitter);
+      oop.implement(ScrollBar.prototype, EventEmitter);
       var VScrollBar = (
         /** @class */
         function(_super) {
@@ -19588,9 +19588,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/lib/event"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var event = require3("./lib/event");
+      var event = require2("./lib/event");
       var RenderLoop = (
         /** @class */
         function() {
@@ -19644,13 +19644,13 @@ var require_ace = __commonJS({
       "ace/lib/event",
       "ace/lib/useragent",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
-      var oop2 = require3("../lib/oop");
-      var dom = require3("../lib/dom");
-      var lang = require3("../lib/lang");
-      var event = require3("../lib/event");
-      var useragent = require3("../lib/useragent");
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
+    ], function(require2, exports2, module2) {
+      var oop = require2("../lib/oop");
+      var dom = require2("../lib/dom");
+      var lang = require2("../lib/lang");
+      var event = require2("../lib/event");
+      var useragent = require2("../lib/useragent");
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
       var CHAR_COUNT = 512;
       var USE_OBSERVER = typeof ResizeObserver == "function";
       var L = 200;
@@ -19832,14 +19832,14 @@ var require_ace = __commonJS({
         width: 0,
         height: 0
       };
-      oop2.implement(FontMetrics.prototype, EventEmitter);
+      oop.implement(FontMetrics.prototype, EventEmitter);
       exports2.FontMetrics = FontMetrics;
     });
     ace.define("ace/css/editor-css", [
       "require",
       "exports",
       "module"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       module2.exports = `
 .ace_br1 {border-top-left-radius    : 3px;}
 .ace_br2 {border-top-right-radius   : 3px;}
@@ -20545,11 +20545,11 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/lib/oop",
       "ace/lib/event_emitter"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
-      var oop2 = require3("../lib/oop");
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
+      var dom = require2("../lib/dom");
+      var oop = require2("../lib/oop");
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
       var Decorator = (
         /** @class */
         function() {
@@ -20670,7 +20670,7 @@ var require_ace = __commonJS({
           return Decorator2;
         }()
       );
-      oop2.implement(Decorator.prototype, EventEmitter);
+      oop.implement(Decorator.prototype, EventEmitter);
       exports2.Decorator = Decorator;
     });
     ace.define("ace/virtual_renderer", [
@@ -20696,27 +20696,27 @@ var require_ace = __commonJS({
       "ace/layer/decorators",
       "ace/lib/useragent",
       "ace/layer/text_util"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("./lib/oop");
-      var dom = require3("./lib/dom");
-      var lang = require3("./lib/lang");
-      var config = require3("./config");
-      var GutterLayer = require3("./layer/gutter").Gutter;
-      var MarkerLayer = require3("./layer/marker").Marker;
-      var TextLayer = require3("./layer/text").Text;
-      var CursorLayer = require3("./layer/cursor").Cursor;
-      var HScrollBar = require3("./scrollbar").HScrollBar;
-      var VScrollBar = require3("./scrollbar").VScrollBar;
-      var HScrollBarCustom = require3("./scrollbar_custom").HScrollBar;
-      var VScrollBarCustom = require3("./scrollbar_custom").VScrollBar;
-      var RenderLoop = require3("./renderloop").RenderLoop;
-      var FontMetrics = require3("./layer/font_metrics").FontMetrics;
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var editorCss = require3("./css/editor-css");
-      var Decorator = require3("./layer/decorators").Decorator;
-      var useragent = require3("./lib/useragent");
-      var isTextToken = require3("./layer/text_util").isTextToken;
+      var oop = require2("./lib/oop");
+      var dom = require2("./lib/dom");
+      var lang = require2("./lib/lang");
+      var config = require2("./config");
+      var GutterLayer = require2("./layer/gutter").Gutter;
+      var MarkerLayer = require2("./layer/marker").Marker;
+      var TextLayer = require2("./layer/text").Text;
+      var CursorLayer = require2("./layer/cursor").Cursor;
+      var HScrollBar = require2("./scrollbar").HScrollBar;
+      var VScrollBar = require2("./scrollbar").VScrollBar;
+      var HScrollBarCustom = require2("./scrollbar_custom").HScrollBar;
+      var VScrollBarCustom = require2("./scrollbar_custom").VScrollBar;
+      var RenderLoop = require2("./renderloop").RenderLoop;
+      var FontMetrics = require2("./layer/font_metrics").FontMetrics;
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var editorCss = require2("./css/editor-css");
+      var Decorator = require2("./layer/decorators").Decorator;
+      var useragent = require2("./lib/useragent");
+      var isTextToken = require2("./layer/text_util").isTextToken;
       dom.importCssString(editorCss, "ace_editor.css", false);
       var VirtualRenderer = (
         /** @class */
@@ -21968,7 +21968,7 @@ var require_ace = __commonJS({
       VirtualRenderer.prototype.$padding = null;
       VirtualRenderer.prototype.$frozen = false;
       VirtualRenderer.prototype.STEPS = 8;
-      oop2.implement(VirtualRenderer.prototype, EventEmitter);
+      oop.implement(VirtualRenderer.prototype, EventEmitter);
       config.defineOptions(VirtualRenderer.prototype, "renderer", {
         useResizeObserver: {
           set: function(value) {
@@ -22158,12 +22158,12 @@ var require_ace = __commonJS({
       "ace/lib/net",
       "ace/lib/event_emitter",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var oop2 = require3("../lib/oop");
-      var net = require3("../lib/net");
-      var EventEmitter = require3("../lib/event_emitter").EventEmitter;
-      var config = require3("../config");
+      var oop = require2("../lib/oop");
+      var net = require2("../lib/net");
+      var EventEmitter = require2("../lib/event_emitter").EventEmitter;
+      var config = require2("../config");
       function $workerBlob(workerUrl) {
         var script = "importScripts('" + net.qualifyURL(workerUrl) + "');";
         try {
@@ -22205,17 +22205,17 @@ var require_ace = __commonJS({
         this.$worker.onmessage = this.onMessage;
       };
       (function() {
-        oop2.implement(this, EventEmitter);
+        oop.implement(this, EventEmitter);
         this.$createWorkerFromOldConfig = function(topLevelNamespaces, mod, classname, workerUrl, importScripts) {
-          if (require3.nameToUrl && !require3.toUrl) require3.toUrl = require3.nameToUrl;
-          if (config.get("packaged") || !require3.toUrl) {
+          if (require2.nameToUrl && !require2.toUrl) require2.toUrl = require2.nameToUrl;
+          if (config.get("packaged") || !require2.toUrl) {
             workerUrl = workerUrl || config.moduleUrl(mod, "worker");
           } else {
             var normalizePath = this.$normalizePath;
-            workerUrl = workerUrl || normalizePath(require3.toUrl("ace/worker/worker.js", null, "_"));
+            workerUrl = workerUrl || normalizePath(require2.toUrl("ace/worker/worker.js", null, "_"));
             var tlns = {};
             topLevelNamespaces.forEach(function(ns) {
-              tlns[ns] = normalizePath(require3.toUrl(ns, null, "_").replace(/(\.js)?(\?.*)?$/, ""));
+              tlns[ns] = normalizePath(require2.toUrl(ns, null, "_").replace(/(\.js)?(\?.*)?$/, ""));
             });
           }
           this.$worker = createWorker(workerUrl);
@@ -22393,11 +22393,11 @@ var require_ace = __commonJS({
       "ace/range",
       "ace/lib/event_emitter",
       "ace/lib/oop"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("./range").Range;
-      var EventEmitter = require3("./lib/event_emitter").EventEmitter;
-      var oop2 = require3("./lib/oop");
+      var Range = require2("./range").Range;
+      var EventEmitter = require2("./lib/event_emitter").EventEmitter;
+      var oop = require2("./lib/oop");
       var PlaceHolder = (
         /** @class */
         function() {
@@ -22542,7 +22542,7 @@ var require_ace = __commonJS({
           return PlaceHolder2;
         }()
       );
-      oop2.implement(PlaceHolder.prototype, EventEmitter);
+      oop.implement(PlaceHolder.prototype, EventEmitter);
       exports2.PlaceHolder = PlaceHolder;
     });
     ace.define("ace/mouse/multi_select_handler", [
@@ -22551,9 +22551,9 @@ var require_ace = __commonJS({
       "module",
       "ace/lib/event",
       "ace/lib/useragent"
-    ], function(require3, exports2, module2) {
-      var event = require3("../lib/event");
-      var useragent = require3("../lib/useragent");
+    ], function(require2, exports2, module2) {
+      var event = require2("../lib/event");
+      var useragent = require2("../lib/useragent");
       function isSamePoint(p1, p2) {
         return p1.row == p2.row && p1.column == p2.column;
       }
@@ -22690,7 +22690,7 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/keyboard/hash_handler"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       exports2.defaultCommands = [
         {
           name: "addCursorAbove",
@@ -22858,7 +22858,7 @@ var require_ace = __commonJS({
           }
         }
       ];
-      var HashHandler = require3("../keyboard/hash_handler").HashHandler;
+      var HashHandler = require2("../keyboard/hash_handler").HashHandler;
       exports2.keyboardHandler = new HashHandler(exports2.multiSelectCommands);
     });
     ace.define("ace/multi_select", [
@@ -22876,16 +22876,16 @@ var require_ace = __commonJS({
       "ace/edit_session",
       "ace/editor",
       "ace/config"
-    ], function(require3, exports2, module2) {
-      var RangeList = require3("./range_list").RangeList;
-      var Range = require3("./range").Range;
-      var Selection = require3("./selection").Selection;
-      var onMouseDown = require3("./mouse/multi_select_handler").onMouseDown;
-      var event = require3("./lib/event");
-      var lang = require3("./lib/lang");
-      var commands = require3("./commands/multi_select_commands");
+    ], function(require2, exports2, module2) {
+      var RangeList = require2("./range_list").RangeList;
+      var Range = require2("./range").Range;
+      var Selection = require2("./selection").Selection;
+      var onMouseDown = require2("./mouse/multi_select_handler").onMouseDown;
+      var event = require2("./lib/event");
+      var lang = require2("./lib/lang");
+      var commands = require2("./commands/multi_select_commands");
       exports2.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
-      var Search = require3("./search").Search;
+      var Search = require2("./search").Search;
       var search = new Search();
       function find(session, needle, dir) {
         search.$options.wrap = true;
@@ -22893,7 +22893,7 @@ var require_ace = __commonJS({
         search.$options.backwards = dir == -1;
         return search.find(session);
       }
-      var EditSession = require3("./edit_session").EditSession;
+      var EditSession = require2("./edit_session").EditSession;
       (function() {
         this.getSelectionMarkers = function() {
           return this.$selectionMarkers;
@@ -23078,7 +23078,7 @@ var require_ace = __commonJS({
           return rectSel;
         };
       }).call(Selection.prototype);
-      var Editor = require3("./editor").Editor;
+      var Editor = require2("./editor").Editor;
       (function() {
         this.updateSelectionMarkers = function() {
           this.renderer.updateCursor();
@@ -23493,7 +23493,7 @@ var require_ace = __commonJS({
         }
       }
       exports2.MultiSelect = MultiSelect;
-      require3("./config").defineOptions(Editor.prototype, "editor", {
+      require2("./config").defineOptions(Editor.prototype, "editor", {
         enableMultiselect: {
           set: function(val) {
             MultiSelect(this);
@@ -23518,9 +23518,9 @@ var require_ace = __commonJS({
       "exports",
       "module",
       "ace/range"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var Range = require3("../../range").Range;
+      var Range = require2("../../range").Range;
       var FoldMode = exports2.FoldMode = function() {
       };
       (function() {
@@ -23593,11 +23593,11 @@ var require_ace = __commonJS({
       "ace/lib/dom",
       "ace/range",
       "ace/config"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      var dom = require3("../lib/dom");
-      var Range = require3("../range").Range;
-      var nls = require3("../config").nls;
+      var dom = require2("../lib/dom");
+      var Range = require2("../range").Range;
+      var nls = require2("../config").nls;
       function binarySearch(array, needle, comparator) {
         var first = 0;
         var last = array.length - 1;
@@ -23737,23 +23737,23 @@ var require_ace = __commonJS({
       "ace/ext/error_marker",
       "ace/config",
       "ace/loader_build"
-    ], function(require3, exports2, module2) {
+    ], function(require2, exports2, module2) {
       "use strict";
-      require3("./loader_build")(exports2);
-      var dom = require3("./lib/dom");
-      var Range = require3("./range").Range;
-      var Editor = require3("./editor").Editor;
-      var EditSession = require3("./edit_session").EditSession;
-      var UndoManager = require3("./undomanager").UndoManager;
-      var Renderer = require3("./virtual_renderer").VirtualRenderer;
-      require3("./worker/worker_client");
-      require3("./keyboard/hash_handler");
-      require3("./placeholder");
-      require3("./multi_select");
-      require3("./mode/folding/fold_mode");
-      require3("./theme/textmate");
-      require3("./ext/error_marker");
-      exports2.config = require3("./config");
+      require2("./loader_build")(exports2);
+      var dom = require2("./lib/dom");
+      var Range = require2("./range").Range;
+      var Editor = require2("./editor").Editor;
+      var EditSession = require2("./edit_session").EditSession;
+      var UndoManager = require2("./undomanager").UndoManager;
+      var Renderer = require2("./virtual_renderer").VirtualRenderer;
+      require2("./worker/worker_client");
+      require2("./keyboard/hash_handler");
+      require2("./placeholder");
+      require2("./multi_select");
+      require2("./mode/folding/fold_mode");
+      require2("./theme/textmate");
+      require2("./ext/error_marker");
+      exports2.config = require2("./config");
       exports2.edit = function(el, options) {
         if (typeof el == "string") {
           var _id = el;
@@ -25135,36 +25135,6 @@ var require_parser = __commonJS({
 // src/editor.ts
 var ace2 = __toESM(require_ace());
 var import_parser = __toESM(require_parser());
-var oop = ace2.require("ace/lib/oop");
-var TextMode = ace2.require("ace/mode/text").Mode;
-var TextHighlightRules = ace2.require("ace/mode/text_highlight_rules").TextHighlightRules;
-var DslHighlightRules = function() {
-  this.$rules = {
-    start: [
-      {
-        token: "paren",
-        regex: /[()]/
-      },
-      {
-        token: "arrow-left-tilde",
-        regex: /<~/
-      },
-      {
-        token: "arrow",
-        regex: /->/
-      },
-      {
-        token: "comment",
-        regex: /^\^\s?.*$/
-      }
-    ]
-  };
-};
-oop.inherits(DslHighlightRules, TextHighlightRules);
-var DslMode = function() {
-  this.HighlightRules = DslHighlightRules;
-};
-oop.inherits(DslMode, TextMode);
 var tutorial = `^ This is a comment line
 
 ^ The only data type in the dsl is an array of arrays.
@@ -25226,15 +25196,57 @@ function validateAST(ast) {
   }
   return errors;
 }
-runButton?.addEventListener("click", (_event) => {
-  const ast = import_parser.default.parse(editor.getValue());
+runButton?.addEventListener("click", () => {
+  let ast;
+  try {
+    ast = import_parser.default.parse(editor.getValue());
+  } catch (e) {
+    console.error("Parse error:", e.message);
+    return;
+  }
+  const arrays = /* @__PURE__ */ new Map();
+  const rules = /* @__PURE__ */ new Map();
+  const states = [];
+  for (const node of ast) {
+    if (node.type === "array") {
+      arrays.set(node.name, node.value);
+    } else if (node.type === "rule") {
+      rules.set(node.name, node.sequence);
+    } else {
+      states.push(node);
+    }
+  }
   const errors = validateAST(ast);
   if (errors.length) {
     console.error("Semantic errors:\n" + errors.join("\n"));
-  } else {
-    console.log("AST is valid:", ast);
+    return;
   }
+  const panel = document.getElementById("detected-states");
+  panel.innerHTML = "<ul>" + states.map((state) => {
+    const unfold = (item) => item.type === "inline" ? [
+      item.value
+    ] : item.type === "varRef" ? arrays.get(item.name) ?? [] : rules.get(item.name)?.flatMap(unfold) ?? [];
+    const srcGroups = typeof state.source === "string" ? arrays.get(state.source) ?? [] : state.source;
+    const hypergraph = srcGroups.map((g) => ({
+      vertices: g
+    }));
+    let ruleObj = {};
+    if (state.rule.length === 1 && state.rule[0].type === "ruleRef") {
+      const nm = state.rule[0].name;
+      ruleObj[nm] = (rules.get(nm) ?? []).flatMap(unfold).map((v) => ({
+        vertices: v
+      }));
+    } else {
+      ruleObj["rule"] = state.rule.flatMap(unfold).map((v) => ({
+        vertices: v
+      }));
+    }
+    const json = {
+      hypergraph,
+      rule: ruleObj,
+      steps: state.count,
+      clean: true
+    };
+    return `<li><pre>${JSON.stringify(json, null, 2)}</pre></li>`;
+  }).join("") + "</ul>";
 });
-export {
-  DslMode
-};

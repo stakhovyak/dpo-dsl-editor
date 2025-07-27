@@ -3,7 +3,7 @@
 ## Syntax
 
 <p align="center">
-  <img src="https://github.com/stakhovyak/dpo-dsl-editor/blob/main/images/ed.png" alt="sparrow logo" width="300" height="300"/>
+  <img src="https://github.com/stakhovyak/dpo-dsl-editor/blob/main/images/ed.png" alt="syntax" width="600"/>
 </p>
 
 

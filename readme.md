@@ -8,12 +8,6 @@
 
 ## Usage
 
-### Use ace editor
-
-<p align="center">
-  <img src="https://github.com/stakhovyak/dpo-dsl-editor/blob/main/images/nt_usage.gif" alt="usage" width="900"/>
-</p>
-
 ### Automatic states detection to send
 
 <p align="center">

@@ -1,4 +1,4 @@
-# DSL frontend
+# NOMOTHETES DSL frontend
 
 ## Syntax
 

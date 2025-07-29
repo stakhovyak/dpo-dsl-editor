@@ -1,7 +1,3 @@
-///////////////////////////////////////////////////////////////////////////
-// PEG.js grammar for DSL: array of arrays, rule and state definitions
-///////////////////////////////////////////////////////////////////////////
-
 Program
   = _ first:Statement rest:(StmtSep Statement)* StmtSep? _ {
       return [ first ].concat(rest.map(item => item[1]));
@@ -49,7 +45,6 @@ StateAssignment
       };
     }
 
-// Sequence used in rule creation: only arrays or variable refs
 SimpleExact3Sequence
   = first:SimpleSeqItem _ "->" _ second:SimpleSeqItem _ "->" _ third:SimpleSeqItem {
       return [ first, second, third ];
@@ -59,7 +54,6 @@ SimpleSeqItem
   = grp:ArrayGroup           { return { type: "inline", value: grp }; }
   / ref:Identifier           { return { type: "varRef",  name: ref }; }
 
-// Original for states: allows SeqItem or rule refs
 Exact3Sequence
   = first:SeqItem _ "->" _ second:SeqItem _ "->" _ third:SeqItem {
       return [ first, second, third ];

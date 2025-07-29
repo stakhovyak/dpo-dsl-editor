@@ -69,6 +69,19 @@
             width: 100%;
         }
 
+        #send-button {
+            flex: 1;
+            height: 1.5rem;
+            background: black;
+            color: white;
+            border: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 2px;
+            margin-bottom: 2px;
+            min-width: 0;
+        }
+
         #buttons button {
             flex: 1;
             height: 2.5rem;
@@ -110,7 +123,7 @@
             padding: 4px 8px;
             margin-bottom: 4px;
             font-family: monospace;
-            font-size: 0.9em;
+            font-size: 0.9rem;
             border-radius: 3px;
         }
 
@@ -122,9 +135,36 @@
             background-color: #f0f0f0;
         }
 
+        #detected-states li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        #detected-states li pre {
+            margin: 0;
+            padding: 0;
+            flex: 1; 
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis; 
+        }
+
+        #detected-states li button {
+            margin-left: 8px; 
+            flex: 0 0 auto;  
+            color: #7f1f0e;;
+            border: none;
+            font-size: 1rem;
+            height: 20px;
+            padding: 0;
+            background-color: #ffffff00;
+        }
+
         footer p {
             text-align: center;
         }
+        
         footer {
             margin: 0;
             padding: 0;
@@ -150,7 +190,6 @@
             <div id="side-panel">
                 <div id="buttons">
                     <button id="run-button">detect</button>
-                    <button id="send-button">send</button>
                     <button id="clean-button">clean</button>
                 </div>
                 <div id="detected-states"></div>

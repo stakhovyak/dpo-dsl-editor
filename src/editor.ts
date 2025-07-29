@@ -25,8 +25,7 @@ $st_mixed = bar <~ (L)->(M,N)->(O) 5;
 
 ^ Or combine them all together
 $final_test = $st_mixed <~ @grow 1;
-`;
-
+`
 
 const editor = ace.edit("editor")
 editor.setOptions({
@@ -37,7 +36,9 @@ editor.setOptions({
 });
 
 const runButton = document.getElementById("run-button");
-const sendButton = document.getElementById("send-button")
+const panel = document.getElementById("detected-states");
+
+const stateJsons = new Map<string, StateJson>()
 
 type ASTNode = ArrayNode | RuleNode | StateNode;
 
@@ -110,9 +111,18 @@ function validateAST(ast: ASTNode[], states: StateNode[]) {
     return errors;
 }
 
-const stateJsons: StateJson[] = [];
+// TODO может сделать это менее топорным??
+editor.on("change", function (delta) {
+    const cursor = editor.selection.getCursor();
+    const line = editor.session.getLine(cursor.row); 
 
-runButton?.addEventListener("click", () => {
+    if (delta.action === "insert" && delta.lines.length > 1) {
+        console.log("Переход на новую строку!");
+        handleRun()
+    }
+});
+
+function handleRun() {
     let ast: ASTNode[];
     try {
         ast = parser.parse(editor.getValue()) as ASTNode[];
@@ -141,100 +151,73 @@ runButton?.addEventListener("click", () => {
         return;
     }
 
-    const panel = document.getElementById("detected-states")!;
-    panel.innerHTML = "<ul>" + states.map(state => {
-        const resolveToVertices = (item: SeqItem): string[][] => {
-            if (item.type === "inline") {
-                return [item.value];
-            } else if (item.type === "varRef") {
-                return arrays.get(item.name) || [];
-            } else if (item.type === "ruleRef") {
-                const rule = rules.get(item.name);
-                return rule ? rule.sequence.flatMap(resolveToVertices) : [];
-            }
-            return [];
-        };
-
-        const buildHypergraph = (source: string | string[][]): Hyperedge[] => {
-            if (typeof source === "string") {
-                const array = arrays.get(source);
-                if (array) return array.map(vertices => ({ vertices }));
-
-                const refState = states.find(s => s.name === source);
-                if (refState) return buildHypergraph(refState.source);
-
-                return [];
-            }
-            return source.map(vertices => ({ vertices }));
-        };
-
-        let ruleSequence: SeqItem[];
-        if (Array.isArray(state.rule)) {
-            ruleSequence = state.rule;
-        } else {
-            ruleSequence = state.rule.sequence;
-        }
-
-        const resolvedSequence = ruleSequence.flatMap(item => {
-            if (item.type === "ruleRef") {
-                const rule = rules.get(item.name);
-                return rule ? rule.sequence : [];
-            }
-            return [item];
-        });
-
-        const L = resolvedSequence.length > 0
-            ? resolveToVertices(resolvedSequence[0]).map(vertices => ({ vertices }))
-            : [];
-
-        const I = resolvedSequence.length > 1
-            ? resolveToVertices(resolvedSequence[1]).map(vertices => ({ vertices }))
-            : [];
-
-        const R = resolvedSequence.length > 2
-            ? resolveToVertices(resolvedSequence[2]).map(vertices => ({ vertices }))
-            : [];
-
-        const hypergraph = buildHypergraph(state.source);
-
-        const json: StateJson = {
-            hypergraph,
-            rule: {
-                "L": L,
-                "I": I,
-                "R": R
-            },
-            steps: state.count,
-            clean: true
-        };
-
-        stateJsons.push(json);
-        return `<li><pre>${JSON.stringify(json, null, 2)}</pre></li>`;
+    panel!.innerHTML = "<ul>" + states.map(state => {
+        const json = buildStateJson(state, arrays, rules, states);
+        stateJsons.set(state.name, json);
+        return `<li><pre>${state.name}</pre><button class="${state.name}">▶︎</button></li>`;
     }).join("") + "</ul>";
-});
+};
 
-sendButton?.addEventListener("click", async () => {
-    if (stateJsons.length === 0) {
-        console.error("No states to send");
+panel?.addEventListener("click", async (e) => {
+    const btn = e.target as HTMLElement;
+    if (!(btn instanceof HTMLButtonElement)) return;
+    const stateName = btn.className;
+    const json = stateJsons.get(stateName);
+    if (!json) {
+        console.error(`No JSON found for state '${stateName}'`);
         return;
     }
-
-    const lastState = stateJsons[stateJsons.length - 1];
 
     try {
         const response = await fetch(server_url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(lastState),
+            body: JSON.stringify(json),
         });
 
         if (!response.ok) throw new Error(`Server returned ${response.status}`);
 
         const result = await response.json();
-        console.log("Server response:", result);
-        alert("State successfully sent to server!");
+        console.log(`Server response for '${stateName}':`, result);
+        alert(`State '${stateName}' successfully sent to server!`);
     } catch (error) {
-        console.error("Failed to send state:", error);
-        alert("Failed to send state to server");
+        console.error(`Failed to send state '${stateName}':`, error);
+        alert(`Failed to send state '${stateName}' to server`);
     }
 });
+
+function buildStateJson(state: StateNode, arrays: Map<string, string[][]>, rules: Map<string, RuleNode>, allStates: StateNode[]): StateJson {
+    const resolveToVertices = (item: SeqItem): string[][] => {
+        if (item.type === "inline") return [item.value];
+        if (item.type === "varRef") return arrays.get(item.name) || [];
+        if (item.type === "ruleRef") {
+            const rule = rules.get(item.name);
+            return rule ? rule.sequence.flatMap(resolveToVertices) : [];
+        }
+        return [];
+    };
+
+    const buildHypergraph = (source: string | string[][]): Hyperedge[] => {
+        if (typeof source === "string") {
+            const arr = arrays.get(source);
+            if (arr) return arr.map(v => ({ vertices: v }));
+            const ref = allStates.find(s => s.name === source);
+            return ref ? buildHypergraph(ref.source) : [];
+        }
+        return source.map(v => ({ vertices: v }));
+    };
+
+    const seq = Array.isArray(state.rule) ? state.rule : state.rule.sequence;
+    const flatSeq = seq.flatMap(item => item.type === "ruleRef" && rules.has(item.name) ? rules.get(item.name)!.sequence : [item]);
+
+    return {
+        hypergraph: buildHypergraph(state.source),
+        rule: {
+            L: flatSeq.length > 0 ? resolveToVertices(flatSeq[0]).map(v => ({ vertices: v })) : [],
+            I: flatSeq.length > 1 ? resolveToVertices(flatSeq[1]).map(v => ({ vertices: v })) : [],
+            R: flatSeq.length > 2 ? resolveToVertices(flatSeq[2]).map(v => ({ vertices: v })) : [],
+        },
+        steps: state.count,
+        clean: true,
+    };
+}

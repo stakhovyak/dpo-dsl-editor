@@ -25269,7 +25269,8 @@ editor.setOptions({
   value: tutorial
 });
 var runButton = document.getElementById("run-button");
-var sendButton = document.getElementById("send-button");
+var panel = document.getElementById("detected-states");
+var stateJsons = /* @__PURE__ */ new Map();
 function validateAST(ast, states) {
   const variables = /* @__PURE__ */ new Set();
   const rules = /* @__PURE__ */ new Set();
@@ -25299,8 +25300,15 @@ function validateAST(ast, states) {
   }
   return errors;
 }
-var stateJsons = [];
-runButton?.addEventListener("click", () => {
+editor.on("change", function(delta) {
+  const cursor = editor.selection.getCursor();
+  const line = editor.session.getLine(cursor.row);
+  if (delta.action === "insert" && delta.lines.length > 1 || delta.action === "insert" && delta.lines.length < -1) {
+    console.log("\u041F\u0435\u0440\u0435\u0445\u043E\u0434 \u043D\u0430 \u043D\u043E\u0432\u0443\u044E \u0441\u0442\u0440\u043E\u043A\u0443!");
+    handleRun();
+  }
+});
+function handleRun() {
   let ast;
   try {
     ast = import_parser.default.parse(editor.getValue());
@@ -25325,94 +25333,81 @@ runButton?.addEventListener("click", () => {
     console.error("Semantic errors:\n" + errors.join("\n"));
     return;
   }
-  const panel = document.getElementById("detected-states");
   panel.innerHTML = "<ul>" + states.map((state) => {
-    const resolveToVertices = (item) => {
-      if (item.type === "inline") {
-        return [
-          item.value
-        ];
-      } else if (item.type === "varRef") {
-        return arrays.get(item.name) || [];
-      } else if (item.type === "ruleRef") {
-        const rule = rules.get(item.name);
-        return rule ? rule.sequence.flatMap(resolveToVertices) : [];
-      }
-      return [];
-    };
-    const buildHypergraph = (source) => {
-      if (typeof source === "string") {
-        const array = arrays.get(source);
-        if (array) return array.map((vertices) => ({
-          vertices
-        }));
-        const refState = states.find((s) => s.name === source);
-        if (refState) return buildHypergraph(refState.source);
-        return [];
-      }
-      return source.map((vertices) => ({
-        vertices
-      }));
-    };
-    let ruleSequence;
-    if (Array.isArray(state.rule)) {
-      ruleSequence = state.rule;
-    } else {
-      ruleSequence = state.rule.sequence;
-    }
-    const resolvedSequence = ruleSequence.flatMap((item) => {
-      if (item.type === "ruleRef") {
-        const rule = rules.get(item.name);
-        return rule ? rule.sequence : [];
-      }
-      return [
-        item
-      ];
-    });
-    const L = resolvedSequence.length > 0 ? resolveToVertices(resolvedSequence[0]).map((vertices) => ({
-      vertices
-    })) : [];
-    const I = resolvedSequence.length > 1 ? resolveToVertices(resolvedSequence[1]).map((vertices) => ({
-      vertices
-    })) : [];
-    const R = resolvedSequence.length > 2 ? resolveToVertices(resolvedSequence[2]).map((vertices) => ({
-      vertices
-    })) : [];
-    const hypergraph = buildHypergraph(state.source);
-    const json = {
-      hypergraph,
-      rule: {
-        "L": L,
-        "I": I,
-        "R": R
-      },
-      steps: state.count,
-      clean: true
-    };
-    stateJsons.push(json);
-    return `<li><pre>${JSON.stringify(json, null, 2)}</pre></li>`;
+    const json = buildStateJson(state, arrays, rules, states);
+    stateJsons.set(state.name, json);
+    return `<li><pre>${state.name}</pre><button class="${state.name}">\u25B6\uFE0E</button></li>`;
   }).join("") + "</ul>";
-});
-sendButton?.addEventListener("click", async () => {
-  if (stateJsons.length === 0) {
-    console.error("No states to send");
+}
+panel?.addEventListener("click", async (e) => {
+  const btn = e.target;
+  if (!(btn instanceof HTMLButtonElement)) return;
+  const stateName = btn.className;
+  const json = stateJsons.get(stateName);
+  if (!json) {
+    console.error(`No JSON found for state '${stateName}'`);
     return;
   }
-  const lastState = stateJsons[stateJsons.length - 1];
   try {
     const response = await fetch(server_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(lastState)
+      body: JSON.stringify(json)
     });
     if (!response.ok) throw new Error(`Server returned ${response.status}`);
     const result = await response.json();
-    console.log("Server response:", result);
-    alert("State successfully sent to server!");
+    console.log(`Server response for '${stateName}':`, result);
+    alert(`State '${stateName}' successfully sent to server!`);
   } catch (error) {
-    console.error("Failed to send state:", error);
-    alert("Failed to send state to server");
+    console.error(`Failed to send state '${stateName}':`, error);
+    alert(`Failed to send state '${stateName}' to server`);
   }
 });
+function buildStateJson(state, arrays, rules, allStates) {
+  const resolveToVertices = (item) => {
+    if (item.type === "inline") return [
+      item.value
+    ];
+    if (item.type === "varRef") return arrays.get(item.name) || [];
+    if (item.type === "ruleRef") {
+      const rule = rules.get(item.name);
+      return rule ? rule.sequence.flatMap(resolveToVertices) : [];
+    }
+    return [];
+  };
+  const buildHypergraph = (source) => {
+    if (typeof source === "string") {
+      const arr = arrays.get(source);
+      if (arr) return arr.map((v) => ({
+        vertices: v
+      }));
+      const ref = allStates.find((s) => s.name === source);
+      return ref ? buildHypergraph(ref.source) : [];
+    }
+    return source.map((v) => ({
+      vertices: v
+    }));
+  };
+  const seq = Array.isArray(state.rule) ? state.rule : state.rule.sequence;
+  const flatSeq = seq.flatMap((item) => item.type === "ruleRef" && rules.has(item.name) ? rules.get(item.name).sequence : [
+    item
+  ]);
+  return {
+    hypergraph: buildHypergraph(state.source),
+    rule: {
+      L: flatSeq.length > 0 ? resolveToVertices(flatSeq[0]).map((v) => ({
+        vertices: v
+      })) : [],
+      I: flatSeq.length > 1 ? resolveToVertices(flatSeq[1]).map((v) => ({
+        vertices: v
+      })) : [],
+      R: flatSeq.length > 2 ? resolveToVertices(flatSeq[2]).map((v) => ({
+        vertices: v
+      })) : []
+    },
+    steps: state.count,
+    clean: true
+  };
+}

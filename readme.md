@@ -1,19 +1,5 @@
 # DSL frontend
 
-# Warning!
-
-contains a bug, so far you cannot use inline @rules as follows
-
-```
-$st_named = (M,N) <~ @grow 3;
-```
-
-it generates wrong JSON. use implicit rule declaration instead
-
-```
-$st_mixed = bar <~ (M, n)->(M)->(O, M) 5;
-```
-
 ## Syntax
 
 <p align="center">

@@ -6,6 +6,12 @@
   <img src="https://github.com/stakhovyak/dpo-dsl-editor/blob/main/images/ed.png" alt="syntax" width="600"/>
 </p>
 
+## Usage
+
+<p align="center">
+  <img src="https://github.com/stakhovyak/dpo-dsl-editor/blob/main/images/nt_usage.gif" alt="usage" width="900"/>
+</p>
+
 ## Objects
 
 ### Basic variables

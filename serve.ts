@@ -5,7 +5,6 @@ Deno.serve({ port: 8000 }, async (req) => {
         const url = new URL(req.url);
         const filePath = url.pathname === "/" ? "./index.html" : `.${url.pathname}`;
 
-        // Безопасность: не даём выйти за корень (опционально)
         const resolvedPath = new URL(filePath, `file://${Deno.cwd()}/`).pathname;
         if (!resolvedPath.startsWith(Deno.cwd())) {
             return new Response("Доступ запрещён", { status: 403 });

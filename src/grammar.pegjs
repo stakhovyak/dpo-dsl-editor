@@ -1,14 +1,6 @@
-{
-  
-}
-
-// Program
-//   = _ stmts:Statement (StmtSep Statement)* StmtSep? _ {
-//       // строим массив из Statement + повторяющихся
-//       return [ stmts ].concat(
-//         (arguments[1]).map(pair => pair[1])
-//       );
-//     }
+///////////////////////////////////////////////////////////////////////////
+// PEG.js grammar for DSL: array of arrays, rule and state definitions
+///////////////////////////////////////////////////////////////////////////
 
 Program
   = _ first:Statement rest:(StmtSep Statement)* StmtSep? _ {
@@ -36,9 +28,10 @@ ArrayAssignment
     }
 
 // 2) @r = SeqItem -> SeqItem -> SeqItem
+//    Restrict SeqItem here to only array groups or variable refs
 RuleAssignment
-  = name:RuleName _ "=" _ seq:Exact3Sequence {
-        return { type: "rule", name, sequence: seq };
+  = name:RuleName _ "=" _ seq:SimpleExact3Sequence {
+      return { type: "rule", name, sequence: seq };
     }
 
 // 3) $s = source <~ SeqItem->SeqItem->SeqItem [count]
@@ -49,13 +42,24 @@ StateAssignment
             type:  "state",
             name:  name,
             source: (Array.isArray(source) && source.length > 1 ? source : source[0]),
-            rule:   typeof rulePart === "string"  // если просто @grow
-                  ? [{ type:"ruleRef", name: rulePart }] 
-                  : rulePart,                  // Exact3Sequence → SeqItem[]
+            rule:   typeof rulePart === "string"
+                  ? [{ type:"ruleRef", name: rulePart }]
+                  : rulePart,
             count:  cnt !== null ? parseInt(cnt, 10) : 5
       };
     }
 
+// Sequence used in rule creation: only arrays or variable refs
+SimpleExact3Sequence
+  = first:SimpleSeqItem _ "->" _ second:SimpleSeqItem _ "->" _ third:SimpleSeqItem {
+      return [ first, second, third ];
+    }
+
+SimpleSeqItem
+  = grp:ArrayGroup           { return { type: "inline", value: grp }; }
+  / ref:Identifier           { return { type: "varRef",  name: ref }; }
+
+// Original for states: allows SeqItem or rule refs
 Exact3Sequence
   = first:SeqItem _ "->" _ second:SeqItem _ "->" _ third:SeqItem {
       return [ first, second, third ];
@@ -98,5 +102,5 @@ Integer
   = [0-9]+ {
       return text();
     }
-_  
-  = ( [ \t\r\n] / CommentLine )*  
+
+_  = ( [ \t\r\n] / CommentLine )*  

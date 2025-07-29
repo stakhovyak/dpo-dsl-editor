@@ -24050,37 +24050,56 @@ var require_parser = __commonJS({
       }
       function peg$f6(ref) {
         return {
+          type: "varRef",
+          name: ref
+        };
+      }
+      function peg$f7(first, second, third) {
+        return [
+          first,
+          second,
+          third
+        ];
+      }
+      function peg$f8(grp) {
+        return {
+          type: "inline",
+          value: grp
+        };
+      }
+      function peg$f9(ref) {
+        return {
           type: "ruleRef",
           name: ref
         };
       }
-      function peg$f7(ref) {
+      function peg$f10(ref) {
         return {
           type: "varRef",
           name: ref
         };
       }
-      function peg$f8(groups) {
+      function peg$f11(groups) {
         return groups;
       }
-      function peg$f9(elems) {
+      function peg$f12(elems) {
         return elems;
       }
-      function peg$f10(head, tail) {
+      function peg$f13(head, tail) {
         return [
           head
         ].concat(tail.map((r) => r[3]));
       }
-      function peg$f11() {
+      function peg$f14() {
         return text();
       }
-      function peg$f12() {
+      function peg$f15() {
         return text().slice(1);
       }
-      function peg$f13() {
+      function peg$f16() {
         return text().slice(1);
       }
-      function peg$f14() {
+      function peg$f17() {
         return text();
       }
       let peg$currPos = options.peg$currPos | 0;
@@ -24545,7 +24564,7 @@ var require_parser = __commonJS({
           }
           if (s3 !== peg$FAILED) {
             s4 = peg$parse_();
-            s5 = peg$parseExact3Sequence();
+            s5 = peg$parseSimpleExact3Sequence();
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
               s0 = peg$f2(s1, s5);
@@ -24649,6 +24668,83 @@ var require_parser = __commonJS({
         }
         return s0;
       }
+      function peg$parseSimpleExact3Sequence() {
+        let s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
+        s0 = peg$currPos;
+        s1 = peg$parseSimpleSeqItem();
+        if (s1 !== peg$FAILED) {
+          s2 = peg$parse_();
+          if (input.substr(peg$currPos, 2) === peg$c5) {
+            s3 = peg$c5;
+            peg$currPos += 2;
+          } else {
+            s3 = peg$FAILED;
+            if (peg$silentFails === 0) {
+              peg$fail(peg$e7);
+            }
+          }
+          if (s3 !== peg$FAILED) {
+            s4 = peg$parse_();
+            s5 = peg$parseSimpleSeqItem();
+            if (s5 !== peg$FAILED) {
+              s6 = peg$parse_();
+              if (input.substr(peg$currPos, 2) === peg$c5) {
+                s7 = peg$c5;
+                peg$currPos += 2;
+              } else {
+                s7 = peg$FAILED;
+                if (peg$silentFails === 0) {
+                  peg$fail(peg$e7);
+                }
+              }
+              if (s7 !== peg$FAILED) {
+                s8 = peg$parse_();
+                s9 = peg$parseSimpleSeqItem();
+                if (s9 !== peg$FAILED) {
+                  peg$savedPos = s0;
+                  s0 = peg$f4(s1, s5, s9);
+                } else {
+                  peg$currPos = s0;
+                  s0 = peg$FAILED;
+                }
+              } else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+              }
+            } else {
+              peg$currPos = s0;
+              s0 = peg$FAILED;
+            }
+          } else {
+            peg$currPos = s0;
+            s0 = peg$FAILED;
+          }
+        } else {
+          peg$currPos = s0;
+          s0 = peg$FAILED;
+        }
+        return s0;
+      }
+      function peg$parseSimpleSeqItem() {
+        let s0, s1;
+        s0 = peg$currPos;
+        s1 = peg$parseArrayGroup();
+        if (s1 !== peg$FAILED) {
+          peg$savedPos = s0;
+          s1 = peg$f5(s1);
+        }
+        s0 = s1;
+        if (s0 === peg$FAILED) {
+          s0 = peg$currPos;
+          s1 = peg$parseIdentifier();
+          if (s1 !== peg$FAILED) {
+            peg$savedPos = s0;
+            s1 = peg$f6(s1);
+          }
+          s0 = s1;
+        }
+        return s0;
+      }
       function peg$parseExact3Sequence() {
         let s0, s1, s2, s3, s4, s5, s6, s7, s8, s9;
         s0 = peg$currPos;
@@ -24683,7 +24779,7 @@ var require_parser = __commonJS({
                 s9 = peg$parseSeqItem();
                 if (s9 !== peg$FAILED) {
                   peg$savedPos = s0;
-                  s0 = peg$f4(s1, s5, s9);
+                  s0 = peg$f7(s1, s5, s9);
                 } else {
                   peg$currPos = s0;
                   s0 = peg$FAILED;
@@ -24712,7 +24808,7 @@ var require_parser = __commonJS({
         s1 = peg$parseArrayGroup();
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$f5(s1);
+          s1 = peg$f8(s1);
         }
         s0 = s1;
         if (s0 === peg$FAILED) {
@@ -24720,7 +24816,7 @@ var require_parser = __commonJS({
           s1 = peg$parseRuleName();
           if (s1 !== peg$FAILED) {
             peg$savedPos = s0;
-            s1 = peg$f6(s1);
+            s1 = peg$f9(s1);
           }
           s0 = s1;
           if (s0 === peg$FAILED) {
@@ -24728,7 +24824,7 @@ var require_parser = __commonJS({
             s1 = peg$parseIdentifier();
             if (s1 !== peg$FAILED) {
               peg$savedPos = s0;
-              s1 = peg$f7(s1);
+              s1 = peg$f10(s1);
             }
             s0 = s1;
           }
@@ -24750,7 +24846,7 @@ var require_parser = __commonJS({
         }
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$f8(s1);
+          s1 = peg$f11(s1);
         }
         s0 = s1;
         return s0;
@@ -24783,7 +24879,7 @@ var require_parser = __commonJS({
             }
             if (s5 !== peg$FAILED) {
               peg$savedPos = s0;
-              s0 = peg$f9(s3);
+              s0 = peg$f12(s3);
             } else {
               peg$currPos = s0;
               s0 = peg$FAILED;
@@ -24868,7 +24964,7 @@ var require_parser = __commonJS({
             }
           }
           peg$savedPos = s0;
-          s0 = peg$f10(s1, s2);
+          s0 = peg$f13(s1, s2);
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;
@@ -24911,7 +25007,7 @@ var require_parser = __commonJS({
             }
           }
           peg$savedPos = s0;
-          s0 = peg$f11();
+          s0 = peg$f14();
         } else {
           peg$currPos = s0;
           s0 = peg$FAILED;
@@ -24964,7 +25060,7 @@ var require_parser = __commonJS({
               }
             }
             peg$savedPos = s0;
-            s0 = peg$f12();
+            s0 = peg$f15();
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -25021,7 +25117,7 @@ var require_parser = __commonJS({
               }
             }
             peg$savedPos = s0;
-            s0 = peg$f13();
+            s0 = peg$f16();
           } else {
             peg$currPos = s0;
             s0 = peg$FAILED;
@@ -25063,7 +25159,7 @@ var require_parser = __commonJS({
         }
         if (s1 !== peg$FAILED) {
           peg$savedPos = s0;
-          s1 = peg$f14();
+          s1 = peg$f17();
         }
         s0 = s1;
         return s0;
@@ -25185,30 +25281,7 @@ function validateAST(ast, states) {
   }
   for (const node of ast) {
     if (node.type === "rule" || node.type === "state") {
-      let seq = [];
-      if (node.type === "rule") {
-        if (node.isLIR && node.L && node.I && node.R) {
-          seq = [
-            node.L,
-            node.I,
-            node.R
-          ];
-        } else if (node.sequence) {
-          seq = node.sequence;
-        }
-      } else {
-        if (Array.isArray(node.rule)) {
-          seq = node.rule;
-        } else if (node.rule.isLIR && node.rule.L && node.rule.I && node.rule.R) {
-          seq = [
-            node.rule.L,
-            node.rule.I,
-            node.rule.R
-          ];
-        } else if (node.rule.sequence) {
-          seq = node.rule.sequence;
-        }
-      }
+      const seq = node.type === "rule" ? node.sequence : Array.isArray(node.rule) ? node.rule : node.rule.sequence;
       for (const item of seq) {
         if (item.type === "varRef" && !variables.has(item.name)) {
           errors.push(`Unknown variable '${item.name}' in ${node.type} '${node.name}'`);
@@ -25247,24 +25320,6 @@ runButton?.addEventListener("click", () => {
       states.push(node);
     }
   }
-  for (const stateNode of states) {
-    if (Array.isArray(stateNode.rule)) {
-      for (let i = 0; i < stateNode.rule.length; i++) {
-        const item = stateNode.rule[i];
-        if (item.type === "ruleRef") {
-          const rule = rules.get(item.name);
-          if (rule) {
-            stateNode.rule[i] = rule;
-          }
-        }
-      }
-    } else if (stateNode.rule.type === "ruleRef") {
-      const rule = rules.get(stateNode.rule.name);
-      if (rule) {
-        stateNode.rule = rule;
-      }
-    }
-  }
   const errors = validateAST(ast, states);
   if (errors.length) {
     console.error("Semantic errors:\n" + errors.join("\n"));
@@ -25272,89 +25327,65 @@ runButton?.addEventListener("click", () => {
   }
   const panel = document.getElementById("detected-states");
   panel.innerHTML = "<ul>" + states.map((state) => {
-    const unfold = (item) => {
-      if ("type" in item) {
-        if (item.type === "inline") {
-          return [
-            item.value
-          ];
-        } else if (item.type === "varRef") {
-          return arrays.get(item.name) ?? [];
-        } else if (item.type === "ruleRef") {
-          const rule = rules.get(item.name);
-          return rule ? unfold(rule) : [];
-        }
-      }
-      const ruleNode = item;
-      if (ruleNode.isLIR && ruleNode.L && ruleNode.I && ruleNode.R) {
+    const resolveToVertices = (item) => {
+      if (item.type === "inline") {
         return [
-          ...unfold(ruleNode.L),
-          ...unfold(ruleNode.I),
-          ...unfold(ruleNode.R)
+          item.value
         ];
-      } else if (ruleNode.sequence) {
-        return ruleNode.sequence.flatMap(unfold);
+      } else if (item.type === "varRef") {
+        return arrays.get(item.name) || [];
+      } else if (item.type === "ruleRef") {
+        const rule = rules.get(item.name);
+        return rule ? rule.sequence.flatMap(resolveToVertices) : [];
       }
       return [];
     };
     const buildHypergraph = (source) => {
       if (typeof source === "string") {
-        const referencedState = states.find((s) => s.name === source);
-        if (referencedState) {
-          return {
-            hypergraph: buildHypergraph(referencedState.source),
-            rule: {},
-            steps: referencedState.count,
-            clean: true
-          };
-        } else {
-          const array = arrays.get(source) ?? [];
-          return array.map((g) => ({
-            vertices: g
-          }));
-        }
-      } else if (Array.isArray(source)) {
-        return source.map((g) => ({
-          vertices: g
+        const array = arrays.get(source);
+        if (array) return array.map((vertices) => ({
+          vertices
         }));
-      } else {
-        return {
-          hypergraph: buildHypergraph(source.source),
-          rule: {},
-          steps: source.count,
-          clean: true
-        };
+        const refState = states.find((s) => s.name === source);
+        if (refState) return buildHypergraph(refState.source);
+        return [];
       }
+      return source.map((vertices) => ({
+        vertices
+      }));
     };
-    const hypergraph = buildHypergraph(state.source);
-    const toHyperedges = (item) => unfold(item).map((vertices) => ({
-      vertices
-    }));
-    const ruleObj = {};
+    let ruleSequence;
     if (Array.isArray(state.rule)) {
-      if (state.rule.length === 3) {
-        ruleObj["L"] = toHyperedges(state.rule[0]);
-        ruleObj["I"] = toHyperedges(state.rule[1]);
-        ruleObj["R"] = toHyperedges(state.rule[2]);
-      } else {
-        ruleObj["rule"] = state.rule.flatMap((item) => unfold(item).map((vertices) => ({
-          vertices
-        })));
-      }
+      ruleSequence = state.rule;
     } else {
-      if (state.rule.isLIR && state.rule.L && state.rule.I && state.rule.R) {
-        ruleObj["L"] = toHyperedges(state.rule.L);
-        ruleObj["I"] = toHyperedges(state.rule.I);
-        ruleObj["R"] = toHyperedges(state.rule.R);
-      } else if (state.rule.sequence) {
-        ruleObj["rule"] = state.rule.sequence.flatMap((item) => unfold(item).map((vertices) => ({
-          vertices
-        })));
-      }
+      ruleSequence = state.rule.sequence;
     }
+    const resolvedSequence = ruleSequence.flatMap((item) => {
+      if (item.type === "ruleRef") {
+        const rule = rules.get(item.name);
+        return rule ? rule.sequence : [];
+      }
+      return [
+        item
+      ];
+    });
+    const L = resolvedSequence.length > 0 ? resolveToVertices(resolvedSequence[0]).map((vertices) => ({
+      vertices
+    })) : [];
+    const I = resolvedSequence.length > 1 ? resolveToVertices(resolvedSequence[1]).map((vertices) => ({
+      vertices
+    })) : [];
+    const R = resolvedSequence.length > 2 ? resolveToVertices(resolvedSequence[2]).map((vertices) => ({
+      vertices
+    })) : [];
+    const hypergraph = buildHypergraph(state.source);
     const json = {
       hypergraph,
-      rule: ruleObj,
+      rule: {
+        "L": L,
+        "I": I,
+        "R": R
+      },
       steps: state.count,
       clean: true
     };
@@ -25369,24 +25400,19 @@ sendButton?.addEventListener("click", async () => {
   }
   const lastState = stateJsons[stateJsons.length - 1];
   try {
-    const response = await sendToServer(lastState);
-    console.log("Server response:", response);
+    const response = await fetch(server_url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(lastState)
+    });
+    if (!response.ok) throw new Error(`Server returned ${response.status}`);
+    const result = await response.json();
+    console.log("Server response:", result);
     alert("State successfully sent to server!");
   } catch (error) {
     console.error("Failed to send state:", error);
     alert("Failed to send state to server");
   }
 });
-async function sendToServer(data) {
-  const response = await fetch(server_url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-  });
-  if (!response.ok) {
-    throw new Error(`Server returned ${response.status}`);
-  }
-  return response.json();
-}
